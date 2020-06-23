@@ -227,6 +227,9 @@
           <div class="select" id="speaker" onclick="setup('speaker')">
             Speaker
           </div>
+          <div class="select" id="hustler" onclick="setup('hustler')">
+            Organizer
+          </div>
         </div>
       </div>
       <div class="input">
@@ -288,16 +291,27 @@
       const speaker = document.querySelector(
         ".select-container .select#speaker"
       );
+      const hustler = document.querySelector(
+        ".select-container .select#hustler"
+      );
       who = type;
       switch (type) {
         case "attendee": {
           attendee.setAttribute("selected", "");
           speaker.removeAttribute("selected");
+          hustler.removeAttribute("selected");
           break;
         }
         case "speaker": {
           speaker.setAttribute("selected", "");
           attendee.removeAttribute("selected");
+          hustler.removeAttribute("selected");
+          break;
+        }
+        case "hustler": {
+            hustler.setAttribute("selected", "");
+          attendee.removeAttribute("selected");
+          speaker.removeAttribute("selected");
           break;
         }
       }

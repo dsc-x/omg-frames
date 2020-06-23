@@ -246,7 +246,7 @@
           <div class="select" id="square" onclick="changeShape('square')">
             Square
           </div>
-          <div class="select" id="circle" onclick="changeShape('circle')" style="display: none">
+          <div class="select" id="circle" onclick="changeShape('circle')">
             Circle
           </div>
         </div>
@@ -279,12 +279,11 @@
     const ctx = canvas.getContext("2d");
     let image = "";
     let shape = "original";
+    let append = "";
     let who = "attendee";
     var banner;
 
     const setup = (type) => {
-      console.log(type);
-
       const attendee = document.querySelector(
         ".select-container .select#attendee"
       );
@@ -331,18 +330,21 @@
       shape = type;
       switch (type) {
         case "original": {
+            append = "";
           original.setAttribute("selected", "");
           square.removeAttribute("selected");
           circle.removeAttribute("selected");
           break;
         }
         case "square": {
+            append = "";
           square.setAttribute("selected", "");
           original.removeAttribute("selected");
           circle.removeAttribute("selected");
           break;
         }
         case "circle": {
+            append = "-circle";
           circle.setAttribute("selected", "");
           original.removeAttribute("selected");
           square.removeAttribute("selected");
@@ -369,7 +371,7 @@
 
     const draw = (who) => {
       banner = new Image();
-      banner.src = "./" + who + ".png";
+      banner.src = "./" + who + append + ".png";
       banner.onload = () => {
         if (image) {
           switch (shape) {

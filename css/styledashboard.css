@@ -92,6 +92,7 @@ canvas {
 
 .frameselectimage {
     height: 80px;
+    width:80px;
     /*padding: 4px;*/
 }
 
@@ -175,10 +176,11 @@ input:checked + .slider:before {
 }
 
 .alertpopup {
-    background: #f8f9fa;
+    background: #343a40;
     border-radius: 10px;
-    color: black;
+    color: white;
 }
+
 
 @media (min-width: 768px) {
     .centeraccording {

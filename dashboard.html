@@ -346,7 +346,6 @@
                                 <img class="frameselectimage" id="hustlerimage" src="frames/hustler.png" alt="">
                             </div>
                         </div>
-
                     </div>
                 </div>
                 <br>
@@ -512,21 +511,22 @@
             <div class="modal-body">
                 <form action="javascript:signup();" id="signupform">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Name" id="name" data-rule-required="true"
-                               data-msg-required="Please Enter Name">
+                        <input type="text" class="form-control" placeholder="Name" id="name" data-rule-required="true" data-msg-required="Please Enter Name">
                     </div>
                     <div class="form-group">
-                        <input type="email" class="form-control" placeholder="E-mail" id="emailnew"
-                               data-rule-required="true" data-msg-required="Please Enter Email">
+                        <input type="email" class="form-control" placeholder="E-mail" id="emailnew" data-rule-required="true" data-msg-required="Please Enter Email">
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" placeholder="Password" id="passwordnew"
-                               data-rule-required="true" data-msg-required="Enter Password">
+                        <input type="text" class="form-control" placeholder="Organization Name" id="organization" data-rule-required="true" data-msg-required="Enter Oranization Name">
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" placeholder="Confirm Password"
-                               data-rule-required="true" data-msg-required="Confirm Your Password"
-                               data-rule-equalto="#passwordnew">
+                        <input type="text" class="form-control" placeholder="Role" id="role" data-rule-required="true" data-msg-required="Enter Role">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" placeholder="Password" id="passwordnew" data-rule-required="true" data-msg-required="Enter Password">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" placeholder="Confirm Password" data-rule-required="true" data-msg-required="Confirm Your Password" data-rule-equalto="#passwordnew">
                     </div>
                     <div class="form-group">
                         <button class="btn btn-block btn-primary" type="submit">SIGN UP</button>
@@ -544,11 +544,10 @@
     </div>
 </div>
 <!--Sign Up Modal-->
-
 <div class="modal fade" id="alertpopup" tabindex="-1" role="dialog" aria-hidden="true" style="overflow-y: auto">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-body alertpopup" id="alerttext">
+        <div class="modal-content" style="border-radius: 10px;">
+            <div class="modal-body alertpopup text-center" id="alerttext">
             </div>
         </div>
 

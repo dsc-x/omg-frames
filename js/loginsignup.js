@@ -1,14 +1,11 @@
 function createordestroybutton(win) {
-    switch (win) {
-        case 'index':
-        case 'dashboard':
             if (sessionStorage.getItem('token') != null) {
                 var navmenu = document.getElementById("navmenu");
                 navmenu.removeChild(navmenu.lastChild);
                 var btn = document.createElement("button");
                 btn.type = "button";
                 btn.className = "btn btn-outline-primary";
-                btn.setAttribute("onclick", "logout()");
+                btn.setAttribute("onclick", "logout(\'"+win+"'\)");
                 btn.innerHTML = "Logout";
                 navmenu.appendChild(btn);
             } else {
@@ -22,17 +19,6 @@ function createordestroybutton(win) {
                 btn.innerHTML = "Login";
                 navmenu.appendChild(btn);
             }
-            break;
-        case 'gallery':
-            getframes();
-            break;
-        default:
-
-            break;
-
-    }
-
-
 }
 
 function signup() {
@@ -62,7 +48,7 @@ function signup() {
             alertpopup('Failed to Create Account\nInternal Server Error', 'open');
         }
     };
-    xhttp.open("POST", "http://104.236.25.178/api/v1/register", true);
+    xhttp.open("POST", "https://api.iwasat.events/api/v1/register", true);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send(JSON.stringify({email: email, name: name, organisation: organization, password: password, role: role}));
 }
@@ -77,6 +63,9 @@ function login(win) {
             loader('hide');
             sessionStorage.setItem('token', JSON.parse(this.responseText)["token"]);
             createordestroybutton(win);
+            if(win=='gallery'){
+                getframes();
+            }
             $('#loginpopup').modal('hide');
 
         } else if (this.readyState == 4 && this.status == 401) {
@@ -84,7 +73,7 @@ function login(win) {
             alertpopup('Invalid Email or Password', 'open');
         }
     };
-    xhttp.open("POST", "http://104.236.25.178/api/v1/login", true);
+    xhttp.open("POST", "https://api.iwasat.events/api/v1/login", true);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send(JSON.stringify({email: email, password: password}));
 }
@@ -98,7 +87,7 @@ function deleteframe(frameid) {
             getframes();
         }
     };
-    xhttp.open("DELETE", "http://104.236.25.178/api/v1/frames?id="+frameid, true);
+    xhttp.open("DELETE", "https://api.iwasat.events/api/v1/frames?id=" + frameid, true);
     xhttp.setRequestHeader("Accept", "application/json");
     xhttp.setRequestHeader("Authorization", `Bearer ${sessionStorage.getItem('token')}`);
     xhttp.send();
@@ -143,7 +132,7 @@ function getframes() {
                 alertpopup(this.responseText, 'open');
             }
         };
-        xhttp.open("GET", "http://104.236.25.178/api/v1/frames", true);
+        xhttp.open("GET", "https://api.iwasat.events/api/v1/frames", true);
         xhttp.setRequestHeader("Accept", "application/json");
         xhttp.setRequestHeader("Content-type", "application/json");
         xhttp.setRequestHeader("Authorization", `Bearer ${sessionStorage.getItem('token')}`);
@@ -168,7 +157,7 @@ function saveframe() {
                 alertpopup('Error While Saving\nLogin Again', 'open');
             }
         };
-        xhr.open("POST", "http://104.236.25.178/api/v1/frames");
+        xhr.open("POST", "https://api.iwasat.events/api/v1/frames");
         xhr.setRequestHeader("Accept", "application/json");
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.setRequestHeader("Authorization", `Bearer ${sessionStorage.getItem("token")}`);
@@ -177,17 +166,11 @@ function saveframe() {
 
 }
 
-function logout() {
+function logout(win) {
     sessionStorage.removeItem('token');
     createordestroybutton('index');
     createordestroybutton('dashboard');
-}
-
-function alertpopup(text, par) {
-    document.getElementById('alerttext').innerHTML = text;
-    if (par == 'open') {
-        $('#alertpopup').modal('show');
-    } else {
-        $('#alertpopup').modal('hide');
+    if(win=='gallery'){
+        $('#loginpopup').modal('show');
     }
 }

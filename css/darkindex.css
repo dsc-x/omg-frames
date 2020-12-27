@@ -42,3 +42,8 @@ a,div,p{
 #alerttext{
     color:black !important;
 }
+.alertpopup {
+    background: #f8f9fa;
+    border-radius: 10px;
+    color: black;
+}

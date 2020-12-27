@@ -147,10 +147,10 @@ input:checked + .slider:before {
 .addborderright {
     border-right: 1px solid #bdbdbd;
 }
-.alertpopup{
-    background: #f8f9fa;
+.alertpopup {
+    background: #343a40;
     border-radius: 10px;
-    color: black !important;
+    color: white;
 }
 @media (min-width: 768px) {
     .centeraccording {

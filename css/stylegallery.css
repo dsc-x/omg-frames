@@ -98,9 +98,9 @@ input:checked + .slider:before {
 }
 
 .alertpopup {
-    background: #f8f9fa;
+    background: #343a40;
     border-radius: 10px;
-    color: black;
+    color: white;
 }
 
 @media (min-width: 768px) {

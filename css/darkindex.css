@@ -1,0 +1,49 @@
+/*#343a40 black*/
+/*#f8f9fa white*/
+.modal-content,.navbar,.main-nav,body{
+    background: #343a40 !important;
+}
+.bluecolor{
+    color: #007bff;
+}
+.close{
+    color: #f8f9fa;
+}
+.close:hover{
+    color: #f8f9fa;
+}
+a,div,p{
+    color:#f8f9fa !important ;
+}
+.btn-outline-primary{
+    color:#f8f9fa;
+    border-color: #f8f9fa;
+}
+
+.infosmall{
+    color: #b1afaf !important;
+}
+.subbannertext {
+    color: #b1afaf !important;
+}
+.navbar-toggler{
+    filter: invert(100%);
+}
+.addborderbottom {
+    border-bottom: 1px solid #7d7d7d;
+}
+.error{
+    color:#13de22;
+    padding: 2px 2px;
+}
+.dropdown-divider{
+    border-color: #7d7d7d;
+}
+#alerttext{
+    color:black !important;
+}
+.alertpopup {
+    background: #f8f9fa;
+    border-radius: 10px;
+    color: black;
+}

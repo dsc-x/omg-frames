@@ -1,0 +1,67 @@
+/*#343a40 black*/
+/*#f8f9fa white*/
+.modal-content,.navbar,body{
+    background: #343a40 !important;
+}
+.main-nav{
+    background: #2b3036 !important;
+}
+.main-nav img{
+    filter: invert(100%);
+}
+.close{
+    color: #f8f9fa;
+}
+.close:hover{
+    color: #f8f9fa;
+}
+.addborderbottom {
+    border-bottom: 1px solid #7d7d7d;
+}
+.addborderright {
+    border-right: 1px solid #7d7d7d;
+}
+a,span,div,p{
+    color:#f8f9fa !important ;
+}
+.nav-text{
+    color: #f8f9fa;
+}
+.btn-outline-primary{
+    color:#f8f9fa;
+    border-color: #f8f9fa;
+}
+.select:hover{
+    color:#f8f9fa !important;
+}
+.select{
+    color: #0046ff !important;
+}
+.select[selected]{
+    color: #f8f9fa !important;
+}
+img[alt="delete"],img[alt="edit"],img[alt="undo"],img[alt="redo"],img[alt="darkmode"]{
+    filter:invert(100%);
+}
+.navbar-toggler{
+    filter: invert(100%);
+}
+.error{
+    color:#13de22;
+    padding: 2px 2px;
+}
+.dropdown-divider{
+    border-color: #7d7d7d;
+}
+#alerttext{
+    color:black !important;
+}
+canvas{
+    border: 1px solid #f8f9fa !important;
+}
+.alertpopup {
+    background: #f8f9fa;
+    border-radius: 10px;
+    color: black;
+}
+

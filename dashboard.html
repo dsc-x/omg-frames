@@ -1,0 +1,843 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Badge Generator - OMG - Developer Student Clubs</title>
+    <meta name="description" content="Badge Generator - OMG - Developer Student Clubs"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link crossorigin="anonymous" href="https://fonts.googleapis.com/icon?family=Google+Sans:400&display=swap"
+          rel="stylesheet"/>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+          integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.2/croppie.css">
+    <link rel="stylesheet" href="css/styledashboard.css">
+    <style>
+        /* width */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 5px grey;
+            border-radius: 10px;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #0046ff;
+            border-radius: 10px;
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0046ff;
+        }
+
+        .hidescroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .hidescroll {
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none; /* Firefox */
+        }
+
+    </style>
+
+    <style>
+
+        .main-nav img {
+            position: relative;
+            text-align: center;
+            vertical-align: middle;
+            font-size: 2rem;
+
+            padding: 10px;
+        }
+
+        .main-nav {
+            background: #e5e5e5;
+            position: fixed;
+            z-index: 1000;
+        }
+
+        .main-nav li[selected] .nav-text {
+            color: #0046ff !important;
+        }
+
+        .main-nav li[selected] img {
+            filter: invert(13%) sepia(74%) saturate(7348%) hue-rotate(229deg) brightness(104%) contrast(103%);
+        }
+
+        .main-nav > ul {
+            margin: 0rem 0rem;
+        }
+
+        nav ul,
+        nav li {
+            outline: 0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .main-nav li:hover > a,
+        nav.main-nav li.active > a {
+            font-size: 20px;
+        }
+
+        .main-nav li > a {
+            border-collapse: collapse;
+            border-spacing: 0;
+            font-size: 1.03rem;
+            text-decoration: none;
+        }
+
+        @media (min-width: 769px) {
+            /*until desktop screen*/
+            .main-nav img {
+                display: table-cell;
+                width: 50px;
+                height: 50px;
+            }
+
+            .main-nav:hover,
+            nav.main-nav.expanded {
+                cursor: pointer;
+                width: 10em;
+                overflow: visible;
+                font-size: 20px;
+            }
+
+            .main-nav li:hover {
+                border-right: 2px solid #0046ff;
+            }
+
+            .main-nav {
+                padding-top: 100px;
+                top: 0;
+                bottom: 0;
+                height: 100%;
+                left: 0;
+                width: 3.2rem;
+                overflow: hidden;
+                -webkit-transition: width .05s linear;
+                transition: width .05s linear;
+                -webkit-transform: translateZ(0) scale(1, 1);
+            }
+
+            .main-nav li {
+                position: relative;
+                display: block;
+                width: 10em;
+            }
+
+            .main-nav li > a {
+                position: relative;
+                display: table;
+                -webkit-transform: translateZ(0) scale(1, 1);
+                -webkit-transition: all .1s linear;
+                transition: all .1s linear;
+            }
+
+            .main-nav .nav-text {
+                position: relative;
+                display: table-cell;
+                vertical-align: middle;
+                width: 10rem;
+
+            }
+        }
+
+        @media (max-width: 768px) {
+            /*when there's mobile screen*/
+            .container-fluid {
+                padding-bottom: 100px;
+            }
+
+            .main-nav li[selected] {
+                border-left: 0;
+            }
+
+            .main-nav {
+                background: #e5e5e5;
+                border-top: 1px solid #a3a3a3;
+                position: fixed;
+                margin: 0;
+                left: 0;
+                bottom: 0;
+                width: 100%;
+            }
+
+            .main-nav ul {
+                display: table;
+                width: 100%;
+                cursor: pointer;
+            }
+
+            .main-nav li {
+                justify-content: center;
+                display: flex;
+                float: left;
+                width: 16%; /*distance between icons (100-(number of icons))*/
+                list-style-type: none;
+            }
+
+            .main-nav a {
+                display: block;
+                padding: 5px;
+                height: 74px;
+            }
+
+            .main-nav img, .main-nav span {
+                display: table-cell;
+                margin-left: auto;
+                margin-right: auto;
+                color: black;
+                width: 3rem;
+            }
+
+            .main-nav span {
+                font-size: 14px;
+            }
+
+            .main-nav .nav-text {
+                color: black;
+                text-align: center;
+                width: 4rem;
+                height: 10px;
+                font-size: 3.2vmin;
+                white-space:     nowrap;
+            }
+            
+        }
+    </style>
+</head>
+<body>
+<!--<div class="loader">-->
+<!--    <div class="centerit">-->
+<!--        <div class="spinner-border text-light" role="status"></div>-->
+<!--    </div>-->
+
+<!--</div>-->
+<nav class="navbar navbar-expand-md navbar-light bg-light sticky-top addborderbottom">
+    <div onclick="window.open('index.html');" style="cursor:pointer;"><img class="navbar-brand"
+                                                                           style="height:45px;padding-right:5px;"
+                                                                           src="images/omglogo.png" alt="omglogo"></div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navmenu" aria-controls="navmenu"
+            aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse text-center" id="navmenu">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="index.html" target="_self">Home</a>
+            </li>
+            <div class="dropdown-divider"></div>
+            <li class="nav-item active" onclick="opengallery();">
+                <span class="nav-link">Gallery</span>
+            </li>
+        </ul>
+        <div class="dropdown-divider"></div>
+        <div class="text-center">
+            <div style="display: inline;padding: 20px;">
+                <div style="display: inline;padding-right: 10px;font-size: 15px;">All Changes Saved</div>
+                <div style="display: inline;padding-right: 10px;"><img style="height: 15px;" src="svglogos/undo.svg"
+                                                                       alt="undo"></div>
+                <div style="display: inline"><img style="height: 15px;" src="svglogos/redo.svg" alt="redo"></div>
+            </div>
+        </div>
+        <div class="dropdown-divider"></div>
+        <div class="centeraccording">
+            <label class="switch">
+                <input type="checkbox" checked onchange="lightdark(this);" id="lightdarkbtn">
+                <span class="slider round"></span>
+                <span style="position:relative;" id="darklighttext">Light</span>
+            </label>
+        </div>
+        <div class="dropdown-divider"></div>
+    </div>
+
+
+</nav>
+<nav class="main-nav addborderright">
+    <ul>
+        <li onclick="uploadImage();addselected(this.id);" id="imageselectoroption">
+            <a>
+                <input class="profile-input" type="file" accept="image/*" onchange="upload(event)" hidden/>
+                <img src="svglogos/user.svg" alt="profilepicture">
+                <span class="nav-text">
+                    Picture
+                </span>
+            </a>
+        </li>
+
+        <li id="frameselectoroption"
+            onclick="fullscreen('o');openclosecontentinmiddle('backgroundandshape');addselected(this.id);">
+            <a>
+                <img src="svglogos/background.svg" alt="background">
+                <span class="nav-text">
+                    Background
+                </span>
+            </a>
+        </li>
+        <li id="eventselectoroption"
+            onclick="fullscreen('o');openclosecontentinmiddle('eventselector');addselected(this.id);">
+            <a>
+                <img src="svglogos/calendar.svg" alt="events">
+                <span class="nav-text">
+                    Events
+                </span>
+            </a>
+
+        </li>
+        <li id="iconselectoroption"
+            onclick="addselected(this.id);fullscreen('o');openclosecontentinmiddle('iconsselector');">
+            <a>
+                <img src="svglogos/star.svg" alt="icons">
+                <span class="nav-text">
+                    Icons
+                </span>
+            </a>
+        </li>
+        <li onclick="addselected(this.id);saveframe();" id="uploadselectoroption">
+            <a>
+                <img src="svglogos/upload.svg" alt="upload">
+                <span class="nav-text">
+                            Upload
+                        </span>
+            </a>
+        </li>
+        <!--        openclosecontentinmiddle('editingimage');-->
+        <li id="fullscreenselectoroption" onclick="fullscreen('t');addselected(this.id);">
+            <a>
+                <img src="svglogos/fullscreen.svg" alt="fullscreen">
+                <span class="nav-text">
+                    Fullscreen
+                </span>
+            </a>
+        </li>
+    </ul>
+</nav>
+<div style="padding-top:15px;" class="container-fluid">
+    <div class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="collapse col-md-4 addborderright" id="middle">
+            <span class="float-right close closeicon" onclick="fullscreen('t')">&times;</span>
+            <!--            background and shape selector-->
+            <div class="collapse row" style="overflow-y: auto;" id="backgroundandshape">
+                <div class="col-sm">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="select" id="attendee" selected onclick="setup('attendee')">
+                                <img id="attendeeimage" src="frames/attendee.png" alt="" class="frameselectimage">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="select" id="speaker" onclick="setup('speaker')">
+                                <img id="speakerimage" src="frames/speaker.png" alt="" class="frameselectimage">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="select" id="hustler" onclick="setup('hustler')">
+                                <img class="frameselectimage" id="hustlerimage" src="frames/hustler.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="col-sm">
+                    <div class="row">
+                        <label>Background Shape</label>
+                        <div>
+                            <div class="btn btn-outline-primary select selectbtn" id="original" selected
+                                 onclick="changeShape('original');originalimage()">
+                                Original
+                            </div>
+                            <div class="btn btn-outline-primary select selectbtn" id="square" onclick="changeShape('square')">
+                                Square
+                            </div>
+                            <div class="btn btn-outline-primary select selectbtn" id="circle" onclick="changeShape('circle')">
+                                Circle
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--            background and shape selector-->
+
+            <!--            event selector-->
+            <div class="collapse row" id="eventselector">
+                <div class="col-sm">
+                    You're Coming as
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="btn btn-outline-primary select selectbtn" selected>
+                                Attendee
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="btn btn-outline-primary select selectbtn">
+                                Speaker
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="btn btn-outline-primary select selectbtn">
+                                Organizer
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--            event selector-->
+
+            <div class="collapse row" id="iconsselector" style="overflow-y: auto;">
+                <div class="container row">
+                    <div class="col-4">
+                        <span class="someiconsbackground">
+                            <img src="icons/trophy.svg" alt="" class="someicons">
+                        </span>
+                    </div>
+                    <div class="col-4">
+                        <span class="someiconsbackground">
+                            <img src="icons/trophy%20star.svg" alt="" class="someicons">
+                        </span>
+                    </div>
+                    <div class="col-4">
+                    <span class="someiconsbackground">
+                            <img src="icons/winner.svg" alt="" class="someicons">
+                        </span>
+                    </div>
+                    <div class="col-4">
+                        <span class="someiconsbackground">
+                            <img src="icons/trophy.svg" alt="" class="someicons">
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <!--            Editing the image Section-->
+            <div class="collapse row" id="editingimage">
+                <div id="imageforcrop" style="width:350px; margin-top:30px"></div>
+            </div>
+            <!--            Editing the image Section-->
+        </div>
+
+        <div class="col-md-11" id="perview">
+            <div class="text-center">
+                <span onclick="fullscreen('o');openclosecontentinmiddle('editingimage');"><img
+                        src="svglogos/edit-button.svg" alt="edit" style="height: 20px;cursor: pointer;"></span>
+                <span onclick="deleteimg()"><img src="svglogos/delete.svg" alt="delete"
+                                                    style="height: 20px;cursor: pointer;"></span>
+            </div>
+            <div class="text-center" style="padding-top:5vh;">
+                <canvas></canvas>
+                <div class="text-center">
+                    <div class="text-center">
+                        <div style="padding-right:50px;display: inline;">
+                            <button type="button" onclick="download(canvas.toDataURL('image/png;base64'))"
+                                    class="btn btn-outline-primary"
+                                    style="font-weight: bold;width:130px !important;"><i class="fa fa-download"
+                                                                                         aria-hidden="true"></i> as PNG
+                            </button>
+                        </div>
+                        <div style="padding-left: 50px;display: inline;">
+                            <button class="btn btn-outline-primary" style="font-weight: bold;width: 130px !important;">
+                                <i class="fa fa-share" aria-hidden="true"></i>Share
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<!-- Login Modal -->
+<div class="modal fade" id="loginpopup" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h5 class="modal-title w-100">Account Login</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="javascript:login('dashboard')" id="loginform">
+                    <div class="form-group">
+                        <input type="email" class="form-control" placeholder="E-mail" id="email"
+                               value="helloworld@gmail.com" data-rule-required="true" data-msg-required="Enter Email">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" placeholder="Password" id="password"
+                               value="hello1234" data-rule-required="true" data-msg-required="Enter Password"
+                               minlength="6" data-msg-number="Please enter at least 6 characters">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-block btn-primary" type="submit">SIGN IN</button>
+                    </div>
+                </form>
+
+                <div class="form-group text-center">
+                    <span class="infosmall">Forgot <a href="#">Email/Password</a>?</span>
+                </div>
+                <div class="form-group text-center">
+                    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#signuppopup"
+                            onclick="$('#loginpopup').modal('hide')">
+                        Create an Account
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Login Modal-->
+
+<!--Sign Up Modal-->
+<div class="modal fade" id="signuppopup" tabindex="-1" role="dialog" aria-hidden="true" style="overflow-y: auto">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h5 class="modal-title w-100">Create Account</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="javascript:signup();" id="signupform">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Name" id="name" data-rule-required="true" data-msg-required="Please Enter Name">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" placeholder="E-mail" id="emailnew" data-rule-required="true" data-msg-required="Please Enter Email">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Organization Name" id="organization" data-rule-required="true" data-msg-required="Enter Oranization Name">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Role" id="role" data-rule-required="true" data-msg-required="Enter Role">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" placeholder="Password" id="passwordnew" data-rule-required="true" data-msg-required="Enter Password">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" placeholder="Confirm Password" data-rule-required="true" data-msg-required="Confirm Your Password" data-rule-equalto="#passwordnew">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-block btn-primary" type="submit">SIGN UP</button>
+                    </div>
+                </form>
+
+                <div class="form-group text-center">
+                    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#loginpopup"
+                            onclick="$('#signuppopup').modal('hide')">
+                        Already have Account?
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Sign Up Modal-->
+<div class="modal fade" id="alertpopup" tabindex="-1" role="dialog" aria-hidden="true" style="overflow-y: auto">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" style="border-radius: 10px;">
+            <div class="modal-body alertpopup text-center" id="alerttext">
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!----------------script files------------------------->
+<script>
+    const canvas = document.querySelector("canvas");
+    const ctx = canvas.getContext("2d");
+    let image = "";
+    let shape = "original";
+    let append = "";
+    let who = "attendee";
+    var banner;
+    var tempsrc;
+    const setup = (type) => {
+        const attendee = document.querySelector(
+            ".select#attendee"
+        );
+        const speaker = document.querySelector(
+            ".select#speaker"
+        );
+        const hustler = document.querySelector(
+            ".select#hustler"
+        );
+        who = type;
+        switch (type) {
+            case "attendee": {
+                attendee.setAttribute("selected", "");
+                speaker.removeAttribute("selected");
+                hustler.removeAttribute("selected");
+                break;
+            }
+            case "speaker": {
+                speaker.setAttribute("selected", "");
+                attendee.removeAttribute("selected");
+                hustler.removeAttribute("selected");
+                break;
+            }
+            case "hustler": {
+                hustler.setAttribute("selected", "");
+                attendee.removeAttribute("selected");
+                speaker.removeAttribute("selected");
+                break;
+            }
+        }
+        draw(who);
+    };
+
+    const uploadImage = () => {
+        document.querySelector("input.profile-input").click();
+    };
+
+    const changeShape = (type) => {
+        const attendee = document.querySelector(
+            " .select#attendee"
+        );
+        const speaker = document.querySelector(
+            ".select#speaker"
+        );
+        const hustler = document.querySelector(
+            ".select#hustler"
+        );
+        const original = document.querySelector(
+            ".select#original"
+        );
+        const square = document.querySelector(" .select#square");
+        const circle = document.querySelector(" .select#circle");
+        shape = type;
+        switch (type) {
+            case "original": {
+                append = "";
+                original.setAttribute("selected", "");
+                square.removeAttribute("selected");
+                circle.removeAttribute("selected");
+                //for displaying in frame selector section
+                document.getElementById("attendeeimage").src = "frames/attendee.png";
+                document.getElementById("hustlerimage").src = "frames/hustler.png";
+                document.getElementById("speakerimage").src = "frames/speaker.png";
+                attendee.style.borderRadius = "0px";
+                hustler.style.borderRadius = "0px";
+                speaker.style.borderRadius = "0px";
+                //for displaying in frame selector section
+                break;
+            }
+            case "square": {
+                append = "";
+                square.setAttribute("selected", "");
+                original.removeAttribute("selected");
+                circle.removeAttribute("selected");
+                //for displaying in frame selector section
+                document.getElementById("attendeeimage").src = "frames/attendee.png";
+                document.getElementById("hustlerimage").src = "frames/hustler.png";
+                document.getElementById("speakerimage").src = "frames/speaker.png";
+                attendee.style.borderRadius = "0px";
+                hustler.style.borderRadius = "0px";
+                speaker.style.borderRadius = "0px";
+                //for displaying in frame selector section
+                break;
+            }
+            case "circle": {
+                append = "-circle";
+                circle.setAttribute("selected", "");
+                original.removeAttribute("selected");
+                square.removeAttribute("selected");
+                //for displaying in frame selector section
+                document.getElementById("attendeeimage").src = "frames/attendee-circle.png";
+                document.getElementById("hustlerimage").src = "frames/hustler-circle.png";
+                document.getElementById("speakerimage").src = "frames/speaker-circle.png";
+                attendee.style.borderRadius = "50%";
+                hustler.style.borderRadius = "50%";
+                speaker.style.borderRadius = "50%";
+
+                //for displaying in frame selector section
+                break;
+            }
+        }
+        draw(who);
+    };
+
+    const upload = (e) => {
+        if (e && e.target.files && e.target.files[0]) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                $image_crop.croppie('bind', {
+                    url: event.target.result
+                })
+                const img = new Image();
+                img.onload = () => {
+                    image = img;
+                    draw(who);
+                };
+                img.src = event.target.result;
+                tempsrc = event.target.result;
+            };
+            reader.readAsDataURL(e.target.files[0]);
+            fullscreen('o');
+            openclosecontentinmiddle('editingimage');
+        }
+    };
+
+    const draw = (who) => {
+        banner = new Image();
+        banner.src = "./frames/" + who + append + ".png";
+        banner.onload = () => {
+            if (image) {
+                switch (shape) {
+                    case "original": {
+                        canvas.width = image.width;
+                        canvas.height = image.height;
+                        ctx.drawImage(image, 0, 0);
+                        break;
+                    }
+                    default: {
+                        const size = Math.min(image.width, image.height);
+                        canvas.width = 500;
+                        canvas.height = 500;
+                        const hRatio = canvas.width / image.width;
+                        const vRatio = canvas.height / image.height;
+                        const ratio = Math.max(hRatio, vRatio);
+                        const x = (canvas.width - image.width * ratio) / 2;
+                        const y = (canvas.height - image.height * ratio) / 2;
+                        ctx.drawImage(
+                            image,
+                            0,
+                            0,
+                            image.width,
+                            image.height,
+                            x,
+                            y,
+                            image.width * ratio,
+                            image.height * ratio
+                        );
+                        break;
+                    }
+                }
+            } else {
+                ctx.canvas.width = 500;
+                ctx.canvas.height = 500;
+            }
+
+            const height = (banner.height / banner.width) * canvas.width;
+            const y = canvas.height - height;
+            const fontSize = canvas.width / 17.2;
+            const fontY = y + height * 0.7;
+            ctx.drawImage(
+                banner,
+                0,
+                0,
+                banner.width,
+                banner.height,
+                0,
+                y,
+                canvas.width,
+                height
+            );
+
+            ctx.fillStyle = "#757575";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.font = `${fontSize}px Google Sans, sans-serif`;
+
+            if (shape === "circle") {
+                ctx.globalCompositeOperation = "destination-in";
+                ctx.beginPath();
+                ctx.arc(
+                    canvas.width / 2,
+                    canvas.height / 2,
+                    canvas.height / 2,
+                    0,
+                    Math.PI * 2
+                );
+                ctx.closePath();
+                ctx.fill();
+            }
+        };
+    };
+    draw(who);
+</script>
+
+<!--lightdark-->
+<script>
+    function lightdark(dom) {
+        var link = document.createElement('link');
+        var head = document.getElementsByTagName("head");
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'css/darkdashboard.css';
+        var img = document.querySelector('img[alt="omglogo"]');
+        var labeldl = document.getElementById("darklighttext");
+        if (dom.getAttribute('checked') != "") {
+            localStorage.setItem("theme", "light");
+            head[0].removeChild(head[0].lastChild);
+            dom.setAttribute("checked", "");
+            labeldl.innerText = "Light";
+            img.src = "images/omglogo.png";
+        } else {
+            localStorage.setItem("theme", "dark");
+            img.src = "images/omglogodark.png";
+            labeldl.innerText = "Dark";
+            dom.removeAttribute("checked");
+            head[0].appendChild(link);
+        }
+    }
+
+    window.onload = function () {
+        if (localStorage.getItem("theme") == "dark") {
+            var link = document.createElement('link');
+            var head = document.getElementsByTagName("head");
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = 'css/darkdashboard.css';
+            var dom = document.getElementById('lightdarkbtn');
+            var img = document.querySelector('img[alt="omglogo"]');
+            var labeldl = document.getElementById("darklighttext");
+
+            img.src = "images/omglogodark.png";
+            labeldl.innerText = "Dark";
+            dom.removeAttribute("checked");
+            head[0].appendChild(link);
+        }
+        createordestroybutton('dashboard');
+    }
+</script>
+<!--lightdark-->
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+<!--formvalidate-->
+<script>
+    $(document).ready(function () {
+        $('#signupform').validate();
+        $('#loginform').validate();
+    })
+
+</script>
+<!--formvalidate-->
+<script src="js/croppie.js"></script>
+<script type="text/javascript" src="js/imageedit.js"></script>
+<script src="js/loginsignup.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+
+</html>

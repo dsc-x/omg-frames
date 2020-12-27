@@ -1,14 +1,14 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Badge Generator - OMG - Developer Student Clubs</title>
+    <meta charset="UTF-8">
+    <title>OMG Gallery</title>
     <meta name="description" content="Badge Generator - OMG - Developer Student Clubs"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link crossorigin="anonymous" href="https://fonts.googleapis.com/icon?family=Google+Sans:400&display=swap"
           rel="stylesheet"/>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/styleindex.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/stylegallery.css">
     <style>
         /* width */
         ::-webkit-scrollbar {
@@ -42,20 +42,32 @@
         }
 
     </style>
+
 </head>
 <body>
-
 <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top addborderbottom">
-    <div><img class="navbar-brand" style="height:45px;padding-right:5px;" src="images/omglogo.png" alt="omglogo"></div>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navmenu" aria-controls="navmenu"
-            aria-expanded="false" aria-label="Toggle navigation">
+    <div onclick="window.open('index.html','_parent');" style="cursor:pointer;"><img class="navbar-brand"
+                                                                           style="height:45px;padding-right:5px;"
+                                                                           src="images/omglogo.png" alt="omglogo"></div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navmenu"
+            aria-controls="navmenu" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-
     <div class="collapse navbar-collapse text-center" id="navmenu">
         <ul class="navbar-nav mr-auto">
+            <div class="dropdown-divider"></div>
+            <li class="nav-item active">
+                <a class="nav-link" href="index.html" target="_self">Home</a>
+            </li>
+            <div class="dropdown-divider"></div>
+            <li class="nav-item active">
+                <a class="nav-link" href="dashboard.html" target="_self">Dashboard</a>
+            </li>
+
 
         </ul>
+
+        <div class="dropdown-divider"></div>
         <div class="centeraccording">
             <label class="switch">
                 <input type="checkbox" checked onchange="lightdark(this);" id="lightdarkbtn">
@@ -65,72 +77,30 @@
         </div>
         <div class="dropdown-divider"></div>
     </div>
-
 </nav>
-
-<div class="container-fluid">
-    <div class="row" style="padding-top: 10px;">
-        <div class="col-md-6">
-            <div class="container">
-                <p class="mainbannertext">Welcome to <span class="bluecolor">OMG Frames</span></p>
-                <p class="mainbannertext">Develop frames for your favourite events</p>
-                <span class="subbannertext">Build a beautiful, modern frames with fully customizable color template.</span>
-
-                <div class="text-center row">
-                    <div class="col-6">
-                        <button type="button" onclick="window.open('dashboard.html','_self')" class="btn btn-primary"
-                                style="width: 150px;">View Dashboard
-                        </button>
-                    </div>
-                    <div class="col-6">
-                        <button type="button" onclick="opengallery();" class="btn btn-outline-primary" style="width: 150px">View Gallery</button>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <div class="col-md-6">
-            <img class="img-fluid mainbanner" src="svglogos/undraw_creative_team_r90h_2_1.svg" alt="">
-        </div>
-    </div>
-    <div class="container row" style="padding: 50px;">
-        <div class="col-md-6">
-            <span class="someiconsbackground">
-                <img src="svglogos/stacked-files.svg" alt="" class="someicons">
-            </span>
-            <p style="font-size: 20px;font-weight: bold;padding-top: 10px;">Build for Developers</p>
-            <p class="infosmall">The Front is build to make your life easier.Variables, build tooling, documentation,
-                and reusable components.</p>
-
-        </div>
-        <div class="col-md-6">
-            <span class="someiconsbackground">
-                <img src="svglogos/diamond.svg" alt="" class="someicons">
-            </span>
-            <p style="font-size: 20px;font-weight: bold;padding-top: 10px;">Designed to be Modern</p>
-            <p class="infosmall">Designed with the latest design trends in mind.The Front feels modern, minimal and
-                beautiful.</p>
-        </div>
+<div class="container">
+    <div class="row text-center" id="main">
     </div>
 </div>
 
 <!-- Login Modal -->
-<div class="modal fade" id="loginpopup" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="loginpopup" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false"
+     data-backdrop="static">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header text-center">
                 <h5 class="modal-title w-100">Account Login</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
             </div>
             <div class="modal-body">
-                <form action="javascript:login('index')" id="loginform">
+                <form action="javascript:login('gallery')" id="loginform">
                     <div class="form-group">
-                        <input type="email" class="form-control" placeholder="E-mail" id="email" value="helloworld@gmail.com" data-rule-required="true" data-msg-required="Enter Email">
+                        <input type="email" class="form-control" placeholder="E-mail" id="email"
+                               value="helloworld@gmail.com" data-rule-required="true" data-msg-required="Enter Email">
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" placeholder="Password" id="password" value="hello1234" data-rule-required="true" data-msg-required="Enter Password" minlength="6" data-msg-number="Please enter at least 6 characters">
+                        <input type="password" class="form-control" placeholder="Password" id="password"
+                               value="hello1234" data-rule-required="true" data-msg-required="Enter Password"
+                               minlength="6" data-msg-number="Please enter at least 6 characters">
                     </div>
                     <div class="form-group">
                         <button class="btn btn-block btn-primary" type="submit">SIGN IN</button>
@@ -153,7 +123,7 @@
 <!--Login Modal-->
 
 <!--Sign Up Modal-->
-<div class="modal fade" id="signuppopup" tabindex="-1" role="dialog" aria-hidden="true" style="overflow-y: auto">
+<div class="modal fade" id="signuppopup" tabindex="-1" role="dialog" aria-hidden="true" style="overflow-y: auto" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header text-center">
@@ -209,8 +179,7 @@
     </div>
 </div>
 
-
-<!----------------script files------------------------->
+<!--script files-->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
@@ -222,7 +191,6 @@
         crossorigin="anonymous"></script>
 <script src="js/loginsignup.js"></script>
 <script src="js/main.js"></script>
-
 <!--lightdark-->
 <script>
     function lightdark(dom) {
@@ -230,7 +198,7 @@
         var head = document.getElementsByTagName("head");
         link.rel = 'stylesheet';
         link.type = 'text/css';
-        link.href = 'css/darkindex.css';
+        link.href = 'css/darkgallery.css';
         var img = document.querySelector('img[alt="omglogo"]');
         var labeldl = document.getElementById("darklighttext");
         if (dom.getAttribute('checked') != "") {
@@ -254,7 +222,7 @@
             var head = document.getElementsByTagName("head");
             link.rel = 'stylesheet';
             link.type = 'text/css';
-            link.href = 'css/darkindex.css';
+            link.href = 'css/darkgallery.css';
             var dom = document.getElementById('lightdarkbtn');
             var img = document.querySelector('img[alt="omglogo"]');
             var labeldl = document.getElementById("darklighttext");
@@ -264,19 +232,29 @@
             dom.removeAttribute("checked");
             head[0].appendChild(link);
         }
-        createordestroybutton('index');
+        checklogin();
     }
 </script>
 <!--lightdark-->
-
 <!--formvalidate-->
 <script>
     $(document).ready(function () {
         $('#signupform').validate();
         $('#loginform').validate();
     })
+
 </script>
 <!--formvalidate-->
-
+<script>
+    function checklogin() {
+        var token = sessionStorage.getItem('token');
+        if (token == null) {
+            $('#loginpopup').modal('show');
+        }else{
+            createordestroybutton('gallery');
+            getframes();
+        }
+    }
+</script>
 </body>
 </html>

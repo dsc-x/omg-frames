@@ -224,3 +224,7 @@ function alertpopup(text, par) {
         $('#alertpopup').modal('hide');
     }
 }
+
+function showpassword(){
+
+}

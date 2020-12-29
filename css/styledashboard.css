@@ -2,7 +2,11 @@ body {
     font-family: "Google Sans", sans-serif;
     background: #f8f9fa;
 }
-
+.form-control{
+    border-radius: 50px;
+    height: 50px;
+    text-align: center;
+}
 .btn-primary {
     background: #0046ff;
     border-color: #0046ff;

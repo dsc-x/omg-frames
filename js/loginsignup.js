@@ -1,24 +1,61 @@
 function createordestroybutton(win) {
-            if (sessionStorage.getItem('token') != null) {
-                var navmenu = document.getElementById("navmenu");
-                navmenu.removeChild(navmenu.lastChild);
-                var btn = document.createElement("button");
-                btn.type = "button";
-                btn.className = "btn btn-outline-primary";
-                btn.setAttribute("onclick", "logout(\'"+win+"'\)");
-                btn.innerHTML = "Logout";
-                navmenu.appendChild(btn);
-            } else {
-                var navmenu = document.getElementById("navmenu");
-                navmenu.removeChild(navmenu.lastChild);
-                var btn = document.createElement("button");
-                btn.type = "button";
-                btn.className = "btn btn-outline-primary";
-                btn.setAttribute("data-toggle", "modal");
-                btn.setAttribute("data-target", "#loginpopup");
-                btn.innerHTML = "Login";
-                navmenu.appendChild(btn);
-            }
+    if (sessionStorage.getItem('token') != null) {
+        var navmenu = document.getElementById("navmenu");
+        navmenu.removeChild(navmenu.lastChild);
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "btn btn-outline-primary";
+        btn.setAttribute("onclick", "logout(\'" + win + "'\)");
+        btn.innerHTML = "Logout";
+        navmenu.appendChild(btn);
+    } else {
+        var navmenu = document.getElementById("navmenu");
+        navmenu.removeChild(navmenu.lastChild);
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "btn btn-outline-primary";
+        btn.setAttribute("data-toggle", "modal");
+        btn.setAttribute("data-target", "#loginpopup");
+        btn.innerHTML = "Login";
+        navmenu.appendChild(btn);
+    }
+}
+
+function dashboardandgallerybutton() {
+    var token=sessionStorage.getItem('token');
+    var el=document.getElementById('top');
+    if(document.getElementById('btns')!=undefined){
+        el.removeChild(document.getElementById('btns'));
+    }
+    var div=document.createElement('div');
+    div.id='btns';
+    if(token!=null){
+        var temp='<div class="text-center row">\n' +
+            '                    <div class="col-6">\n' +
+            '                        <button type="button" onclick="window.open(\'dashboard.html\',\'_self\')" class="btn btn-primary"\n' +
+            '                                style="width: 150px;">View Dashboard\n' +
+            '                        </button>\n' +
+            '                    </div>\n' +
+            '                    <div class="col-6">\n' +
+            '                        <button type="button" onclick="opengallery();" class="btn btn-outline-primary" style="width: 150px">View Gallery</button>\n' +
+            '                    </div>\n' +
+            '                </div>'
+        div.innerHTML=temp;
+    }else{
+        var temp='<div class="row text-center">\n' +
+            '                    <div class="col-12">\n' +
+            '                        <button type="button" onclick="$(\'#loginpopup\').modal(\'show\');" class="btn btn-outline-primary" style="font-size: 22px;">Get Started</button>\n' +
+            '                    </div>\n' +
+            '                </div>'
+        div.innerHTML=temp;
+    }
+    el.appendChild(div);
+}
+
+function checkloginindashboard(){
+    if(sessionStorage.getItem('token')==null){
+        $('#loginpopup').modal('show');
+    }
 }
 
 function signup() {
@@ -35,7 +72,6 @@ function signup() {
             alertpopup('Account Created Successfully!', 'open');
             setTimeout(function () {
                 $('#signupform').modal('hide');
-                alertpopup('', 'hide')
                 $('#loginpopup').modal('show');
                 document.getElementById('email').value = email;
                 document.getElementById('password').value = '';
@@ -49,6 +85,10 @@ function signup() {
         }
     };
     xhttp.open("POST", "https://api.iwasat.events/api/v1/register", true);
+    xhttp.onerror = function () {
+        loader('hide');
+        alertpopup("Unexpected Error!", 'open');
+    };
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send(JSON.stringify({email: email, name: name, organisation: organization, password: password, role: role}));
 }
@@ -61,11 +101,18 @@ function login(win) {
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 202) {
             loader('hide');
+            // alertpopup('Welcome! ' + JSON.parse(this.responseText)["data"]["name"], 'open');
             sessionStorage.setItem('token', JSON.parse(this.responseText)["token"]);
             createordestroybutton(win);
-            if(win=='gallery'){
+            if (win == 'gallery') {
                 getframes();
             }
+            setTimeout(function () {
+                if (win == 'index') {
+                    dashboardandgallerybutton();
+                    window.open('dashboard.html', '_self');
+                }
+            }, 1000);
             $('#loginpopup').modal('hide');
 
         } else if (this.readyState == 4 && this.status == 401) {
@@ -73,9 +120,15 @@ function login(win) {
             alertpopup('Invalid Email or Password', 'open');
         }
     };
+
     xhttp.open("POST", "https://api.iwasat.events/api/v1/login", true);
+    xhttp.onerror = function () {
+        loader('hide');
+        alertpopup("Unexpected Error!", 'open');
+    };
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send(JSON.stringify({email: email, password: password}));
+
 }
 
 function deleteframe(frameid) {
@@ -88,6 +141,10 @@ function deleteframe(frameid) {
         }
     };
     xhttp.open("DELETE", "https://api.iwasat.events/api/v1/frames?id=" + frameid, true);
+    xhttp.onerror = function () {
+        loader('hide');
+        alertpopup("Unexpected Error!", 'open');
+    };
     xhttp.setRequestHeader("Accept", "application/json");
     xhttp.setRequestHeader("Authorization", `Bearer ${sessionStorage.getItem('token')}`);
     xhttp.send();
@@ -119,6 +176,7 @@ function getframes() {
                             '<ul class="list">' +
                             '<li onclick="download(\'' + arrayofframes[i]["frame_data"] + '\');"><span><img src="svglogos/download.svg" class="iconsimagehover">Download</span></li>' +
                             '<li onclick="deleteframe(\'' + arrayofframes[i]["frame_id"] + '\');"><span><img src="svglogos/delete.svg" class="iconsimagehover">Delete&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li>' +
+                            // '<li onclick="set(\'' + arrayofframes[i]["frame_data"] + '\');"><span><img src="svglogos/delete.svg" class="iconsimagehover">Edit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li>' +
                             '</ul>' +
                             '</div>'
                         temp += '</div>'
@@ -133,6 +191,10 @@ function getframes() {
             }
         };
         xhttp.open("GET", "https://api.iwasat.events/api/v1/frames", true);
+        xhttp.onerror = function () {
+            loader('hide');
+            alertpopup("Unexpected Error!", 'open');
+        };
         xhttp.setRequestHeader("Accept", "application/json");
         xhttp.setRequestHeader("Content-type", "application/json");
         xhttp.setRequestHeader("Authorization", `Bearer ${sessionStorage.getItem('token')}`);
@@ -146,31 +208,139 @@ function saveframe() {
         $('#loginpopup').modal('show');
     } else {
         var dataurl = canvas.toDataURL("image/png;base64");
-        var xhr = new XMLHttpRequest();
+        var xhttp = new XMLHttpRequest();
         loader('show');
-        xhr.onreadystatechange = function () {
+        xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 201) {
                 loader('hide');
                 alertpopup('Added Successfully', 'open');
+            } else if (this.readyState == 4 && this.status == 400) {
+                loader('hide');
+                alertpopup('Error While Saving\nTry Again', 'open');
             } else if (this.readyState == 4 && this.status == 401) {
                 loader('hide');
                 alertpopup('Error While Saving\nLogin Again', 'open');
             }
         };
-        xhr.open("POST", "https://api.iwasat.events/api/v1/frames");
-        xhr.setRequestHeader("Accept", "application/json");
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.setRequestHeader("Authorization", `Bearer ${sessionStorage.getItem("token")}`);
-        xhr.send(JSON.stringify({frame: dataurl}));
+        xhttp.open("POST", "https://api.iwasat.events/api/v1/frames");
+        xhttp.onerror = function () {
+            loader('hide');
+            alertpopup("Unexpected Error!", 'open');
+        };
+        xhttp.setRequestHeader("Accept", "application/json");
+        xhttp.setRequestHeader('Content-Type', 'application/json');
+        xhttp.setRequestHeader("Authorization", `Bearer ${sessionStorage.getItem("token")}`);
+        xhttp.send(JSON.stringify({frame: dataurl}));
     }
 
+}
+
+function resetpassword() {
+    var email = document.getElementById('email').value;
+    loader('show');
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            loader('hide');
+            alertpopup('Reset Link Sent to your E-mail','open');
+        } else if (this.readyState == 4 && this.status == 400) {
+            loader('hide');
+            alertpopup('Enter E-mail', 'open');
+        }else if(this.readyState == 4 && this.status == 401){
+            loader('hide');
+            alertpopup('Seems there\'s no Account Registered with this E-mail', 'open');
+        }else if(this.readyState == 4 && this.status == 500){
+            loader('hide');
+            alertpopup('Internal Server Error!', 'open');
+        }
+    };
+
+    xhttp.open("POST", "https://api.iwasat.events/api/v1/send-reset-mail", true);
+    xhttp.onerror = function () {
+        loader('hide');
+        alertpopup("Unexpected Error!", 'open');
+    };
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.send(JSON.stringify({email: email}));
+}
+
+function updatepassword() {
+    var password = document.getElementById('password').value;
+    const params = new URLSearchParams(window.location.search)
+    var resettoken=params.get('token');
+
+    loader('show');
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            loader('hide');
+            alertpopup('Password Changed Successfully','open');
+            setTimeout(function () {
+                window.open('dashboard.html','_self');
+            },2000);
+        } else if (this.readyState == 4 && this.status == 400) {
+            loader('hide');
+            alertpopup('Token or Password is absent in the request body', 'open');
+        }else if(this.readyState == 4 && this.status == 401){
+            loader('hide');
+            alertpopup('Invalid Token!', 'open');
+        }else if(this.readyState == 4 && this.status == 500){
+            loader('hide');
+            alertpopup('Internal Server Error!', 'open');
+        }
+    };
+
+    xhttp.open("POST", "https://api.iwasat.events/api/v1/update-password", true);
+    xhttp.onerror = function () {
+        loader('hide');
+        alertpopup("Unexpected Error!", 'open');
+    };
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.send(JSON.stringify({password: password,token:resettoken}));
 }
 
 function logout(win) {
     sessionStorage.removeItem('token');
     createordestroybutton('index');
     createordestroybutton('dashboard');
-    if(win=='gallery'){
+    if (win == 'gallery') {
         $('#loginpopup').modal('show');
     }
+    else if(win=='index'){
+        dashboardandgallerybutton();
+    }else if(win=='dashboard'){
+        checkloginindashboard();
+    }
 }
+
+// function updateframe(framedata, frameid) {
+//     loader('show');
+//     var xhttp = new XMLHttpRequest();
+//     xhttp.onreadystatechange = function () {
+//         if (this.readyState == 4 && this.status == 201) {
+//             loader('hide');
+//             getframes();
+//         }
+//     };
+//     xhttp.open("PUT", "https://api.iwasat.events/api/v1/frames", true);
+//     xhttp.setRequestHeader("Accept", "application/json");
+//     xhttp.setRequestHeader('Content-Type', 'application/json');
+//     xhttp.setRequestHeader("Authorization", `Bearer ${sessionStorage.getItem("token")}`);
+//     xhttp.send(JSON.stringify({frame_data: framedata, frame_id: frameid}));
+// }
+//
+// function set(image) {
+//     sessionStorage.setItem('imagedata', image);
+// }
+//
+// function edit() {
+//     var imagedata = sessionStorage.getItem('imagedata');
+//
+//     const img = new Image();
+//     img.onload = () => {
+//         canvas.width = img.width;
+//         canvas.height = img.height;
+//         ctx.drawImage(img, 0, 0);
+//     };
+//     img.src = imagedata;
+// }

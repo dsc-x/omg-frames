@@ -3,6 +3,40 @@
 .modal-content,.navbar,body{
     background: #343a40 !important;
 }
+.btn-outline-primary{
+    border-color: #87CEEB !important;
+}
+.btn:focus, .btn-primary:active{
+    background: #87CEEB !important;
+}
+.btn-outline-primary:hover{
+    transition: 0.3s;
+    background:  #87CEEB;
+    color:black;
+}
+.btn-primary{
+    background:  #87CEEB;
+    border-color: #87CEEB;
+    color:black;
+    transition: 0.3s;
+}
+.btn-primary:hover{
+    transition: 0.3s;
+    background: #0046ff;
+    color: #f8f9fa;
+}
+.main-nav li[selected] .nav-text {
+    color: #87CEEB !important;
+}
+.main-nav li[selected] img {
+    filter: invert(86%) sepia(4%) saturate(7258%) hue-rotate(173deg) brightness(95%) contrast(94%);
+}
+@media (min-width: 769px){
+    .main-nav li:hover {
+        border-right: 2px solid #87CEEB;
+    }
+}
+
 .main-nav{
     background: #2b3036 !important;
 }
@@ -40,14 +74,14 @@ a,span,div,p{
 .select[selected]{
     color: #f8f9fa !important;
 }
-img[alt="delete"],img[alt="edit"],img[alt="undo"],img[alt="redo"],img[alt="darkmode"]{
+img[alt="delete"],img[alt="edit"],img[alt="undo"],img[alt="redo"],img[alt="darkmode"],img[alt="gallery"]{
     filter:invert(100%);
 }
 .navbar-toggler{
     filter: invert(100%);
 }
 .error{
-    color:#13de22;
+    color:#28ff03;
     padding: 2px 2px;
 }
 .dropdown-divider{

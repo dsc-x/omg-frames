@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>OMG Gallery</title>
-    <meta name="description" content="Badge Generator - OMG - Developer Student Clubs"/>
+    <title>iWasAt-Gallery</title>
+    <meta name="description" content="Event Badge Generator"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link crossorigin="anonymous" href="https://fonts.googleapis.com/icon?family=Google+Sans:400&display=swap"
           rel="stylesheet"/>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="css/stylegallery.css">
     <style>
         /* width */
@@ -46,27 +47,18 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top addborderbottom">
-    <div onclick="window.open('index.html','_parent');" style="cursor:pointer;"><img class="navbar-brand"
-                                                                           style="height:45px;padding-right:5px;"
-                                                                           src="images/omglogo.png" alt="omglogo"></div>
+    <div onclick="window.open('index.html','_self');" style="cursor:pointer;"><img class="navbar-brand"
+                                                                                   style="height:50px;padding-right:5px;"
+                                                                                   src="images/logo.png"
+                                                                                   alt="logo"></div>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navmenu"
             aria-controls="navmenu" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse text-center" id="navmenu">
         <ul class="navbar-nav mr-auto">
-            <div class="dropdown-divider"></div>
-            <li class="nav-item active">
-                <a class="nav-link" href="index.html" target="_self">Home</a>
-            </li>
-            <div class="dropdown-divider"></div>
-            <li class="nav-item active">
-                <a class="nav-link" href="dashboard.html" target="_self">Dashboard</a>
-            </li>
-
-
         </ul>
-
+<!--        <div class="dropdown-divider"></div>-->
         <div class="dropdown-divider"></div>
         <div class="centeraccording">
             <label class="switch">
@@ -76,8 +68,14 @@
             </label>
         </div>
         <div class="dropdown-divider"></div>
+
     </div>
 </nav>
+<div class="text-right" style="padding-top: 12px;padding-right: 12px;">
+            <span onclick="window.open('dashboard.html','_self')">
+                <img src="svglogos/add.svg" style="height: 30px;cursor: pointer;" alt="addnewbatch">
+            </span>
+</div>
 <div class="container">
     <div class="row text-center" id="main">
     </div>
@@ -91,15 +89,15 @@
             <div class="modal-header text-center">
                 <h5 class="modal-title w-100">Account Login</h5>
             </div>
-            <div class="modal-body">
+            <div class="modal-body text-center">
                 <form action="javascript:login('gallery')" id="loginform">
                     <div class="form-group">
                         <input type="email" class="form-control" placeholder="E-mail" id="email"
-                               value="helloworld@gmail.com" data-rule-required="true" data-msg-required="Enter Email">
+                               data-rule-required="true" data-msg-required="Enter Email">
                     </div>
                     <div class="form-group">
                         <input type="password" class="form-control" placeholder="Password" id="password"
-                               value="hello1234" data-rule-required="true" data-msg-required="Enter Password"
+                               data-rule-required="true" data-msg-required="Enter Password"
                                minlength="6" data-msg-number="Please enter at least 6 characters">
                     </div>
                     <div class="form-group">
@@ -108,7 +106,7 @@
                 </form>
 
                 <div class="form-group text-center">
-                    <span class="infosmall">Forgot <a href="#">Email/Password</a>?</span>
+                    <span class="infosmall">Forgot <a href="forgotpassword.html">Email/Password</a>?</span>
                 </div>
                 <div class="form-group text-center">
                     <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#signuppopup"
@@ -123,34 +121,39 @@
 <!--Login Modal-->
 
 <!--Sign Up Modal-->
-<div class="modal fade" id="signuppopup" tabindex="-1" role="dialog" aria-hidden="true" style="overflow-y: auto" data-keyboard="false" data-backdrop="static">
+<div class="modal fade" id="signuppopup" tabindex="-1" role="dialog" aria-hidden="true" style="overflow-y: auto"
+     data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header text-center">
                 <h5 class="modal-title w-100">Create Account</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body text-center">
                 <form action="javascript:signup();" id="signupform">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Name" id="name" data-rule-required="true" data-msg-required="Please Enter Name">
+                        <input type="text" class="form-control" placeholder="Name" id="name" data-rule-required="true"
+                               data-msg-required="Please Enter Name">
                     </div>
                     <div class="form-group">
-                        <input type="email" class="form-control" placeholder="E-mail" id="emailnew" data-rule-required="true" data-msg-required="Please Enter Email">
+                        <input type="email" class="form-control" placeholder="E-mail" id="emailnew"
+                               data-rule-required="true" data-msg-required="Please Enter Email">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Organization Name" id="organization" data-rule-required="true" data-msg-required="Enter Oranization Name">
+                        <input type="text" class="form-control" placeholder="Organization Name" id="organization"
+                               data-rule-required="true" data-msg-required="Enter Oranization Name">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Role" id="role" data-rule-required="true" data-msg-required="Enter Role">
+                        <input type="text" class="form-control" placeholder="Role" id="role" data-rule-required="true"
+                               data-msg-required="Enter Role">
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" placeholder="Password" id="passwordnew" data-rule-required="true" data-msg-required="Enter Password">
+                        <input type="password" class="form-control" placeholder="Password" id="passwordnew"
+                               data-rule-required="true" data-msg-required="Enter Password" minlength="6">
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" placeholder="Confirm Password" data-rule-required="true" data-msg-required="Confirm Your Password" data-rule-equalto="#passwordnew">
+                        <input type="password" class="form-control" placeholder="Confirm Password"
+                               data-rule-required="true" data-msg-required="Confirm Your Password"
+                               data-rule-equalto="#passwordnew">
                     </div>
                     <div class="form-group">
                         <button class="btn btn-block btn-primary" type="submit">SIGN UP</button>
@@ -199,17 +202,17 @@
         link.rel = 'stylesheet';
         link.type = 'text/css';
         link.href = 'css/darkgallery.css';
-        var img = document.querySelector('img[alt="omglogo"]');
+        var img = document.querySelector('img[alt="logo"]');
         var labeldl = document.getElementById("darklighttext");
         if (dom.getAttribute('checked') != "") {
             localStorage.setItem("theme", "light");
             head[0].removeChild(head[0].lastChild);
             dom.setAttribute("checked", "");
             labeldl.innerText = "Light";
-            img.src = "images/omglogo.png";
+            img.src = "images/logo.png";
         } else {
             localStorage.setItem("theme", "dark");
-            img.src = "images/omglogodark.png";
+            img.src = "images/logodark.png";
             labeldl.innerText = "Dark";
             dom.removeAttribute("checked");
             head[0].appendChild(link);
@@ -224,10 +227,10 @@
             link.type = 'text/css';
             link.href = 'css/darkgallery.css';
             var dom = document.getElementById('lightdarkbtn');
-            var img = document.querySelector('img[alt="omglogo"]');
+            var img = document.querySelector('img[alt="logo"]');
             var labeldl = document.getElementById("darklighttext");
 
-            img.src = "images/omglogodark.png";
+            img.src = "images/logodark.png";
             labeldl.innerText = "Dark";
             dom.removeAttribute("checked");
             head[0].appendChild(link);
@@ -250,7 +253,7 @@
         var token = sessionStorage.getItem('token');
         if (token == null) {
             $('#loginpopup').modal('show');
-        }else{
+        } else {
             createordestroybutton('gallery');
             getframes();
         }

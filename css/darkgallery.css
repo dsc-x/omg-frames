@@ -3,8 +3,33 @@
 .modal-content,.navbar,.main-nav,body{
     background: #343a40 !important;
 }
+.btn-outline-primary{
+    border-color: #87CEEB !important;
+}
+.btn:focus, .btn-primary:active{
+    background: #87CEEB !important;
+}
+.btn-outline-primary:hover{
+    transition: 0.3s;
+    background:  #87CEEB;
+    color:black;
+}
+.btn-primary{
+    background:  #87CEEB;
+    border-color: #87CEEB;
+    color:black;
+    transition: 0.3s;
+}
+.btn-primary:hover{
+    transition: 0.3s;
+    background: #0046ff;
+    color: #f8f9fa;
+}
+.btn:hover img[alt="add"]{
+    filter: invert(0%);
+}
 .bluecolor{
-    color: #007bff;
+    color: #87CEEB;
 }
 .close{
     color: #f8f9fa;
@@ -33,7 +58,7 @@ a,div,p{
     border-bottom: 1px solid #7d7d7d;
 }
 .error{
-    color:#13de22;
+    color:#28ff03;
     padding: 2px 2px;
 }
 .dropdown-divider{
@@ -47,6 +72,9 @@ a,div,p{
 .iconsimagehover {
     filter: invert(100%);
 }
-img[alt="add"]{
+img[alt="add"],img[alt="gallery"]{
     filter:invert(100%);
+}
+img[alt="addnewbatch"]{
+    filter: invert(86%) sepia(4%) saturate(7258%) hue-rotate(173deg) brightness(95%) contrast(94%);
 }

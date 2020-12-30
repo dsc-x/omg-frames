@@ -32,14 +32,14 @@
     <div class="text-center" style="padding-top: 10px;">
         <form action="javascript:updatepassword();" id="resetpassword">
             <div class="form-group">
-                <input type="password" class="form-control" placeholder="New Password" id="password"
-                       style="margin: auto;width: 450px;" data-rule-required="true"
+                <input type="password" class="form-control inputfield" placeholder="New Password" id="password"
+                       data-rule-required="true"
                        data-msg-required="Enter Password" minlength="6"
                        data-msg-number="Please enter at least 6 characters">
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" placeholder="Confirm Password"
-                       style="margin: auto;width: 450px;" data-rule-required="true"
+                <input type="password" class="form-control inputfield" placeholder="Confirm Password"
+                       data-rule-required="true"
                        data-msg-required="Confirm Your Password" data-rule-equalto="#password"
                        data-msg-equalto="Enter Same Password Again">
             </div>
@@ -49,6 +49,7 @@
         </form>
     </div>
 </div>
+
 
 <div class="modal fade" id="alertpopup" tabindex="-1" role="dialog" aria-hidden="true" style="overflow-y: auto">
     <div class="modal-dialog modal-dialog-centered" role="document">

@@ -13,10 +13,10 @@ body {
 }
 
 .btn-primary:hover {
-    border-color: #0046ff;
-    background: #007bff;
+    border-color: #87CEEB;
+    background: #87CEEB;
+    color: black;
 }
-
 .btn-outline-primary {
     color: #0046ff;
     border-color: #0046ff;

@@ -225,6 +225,28 @@ function alertpopup(text, par) {
     }
 }
 
-function showpassword(){
+function generatepassword(elid) {
+    var pass = '';
+    var str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' +
+        'abcdefghijklmnopqrstuvwxyz0123456789' +
+        '!"#$%&()*+,-./:;<=>?@[]^_`{|}~';
+    for (i = 0; i < 12; i++) {
+        var char = Math.floor(Math.random()
+            * str.length + 1);
+        pass += str.charAt(char)
+    }
+    document.getElementById(elid).value = pass;
+}
 
+function showpassword(iid,elid){
+    var el=document.getElementById(elid);
+    if(el.type=='password'){
+        $(String('#'+iid)).removeClass('fa-eye');
+        $(String('#'+iid)).addClass('fa-eye-slash');
+        el.type='text';
+    }else{
+        $(String('#'+iid)).addClass('fa-eye');
+        $(String('#'+iid)).removeClass('fa-eye-slash');
+        el.type='password';
+    }
 }

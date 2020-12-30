@@ -25,6 +25,7 @@
     background: #0046ff;
     color: #f8f9fa;
 }
+
 .btn:hover img[alt="add"]{
     filter: invert(0%);
 }
@@ -58,7 +59,7 @@ a,div,p{
     border-bottom: 1px solid #7d7d7d;
 }
 .error{
-    color:#28ff03;
+    color:#ff7a7a;
     padding: 2px 2px;
 }
 .dropdown-divider{
@@ -72,9 +73,18 @@ a,div,p{
 .iconsimagehover {
     filter: invert(100%);
 }
-img[alt="add"],img[alt="gallery"]{
+img[alt="add"],img[alt="gallery"],img[alt="user"]{
     filter:invert(100%);
 }
 img[alt="addnewbatch"]{
     filter: invert(86%) sepia(4%) saturate(7258%) hue-rotate(173deg) brightness(95%) contrast(94%);
+}
+.btn.btn-primary i{
+    color:black;
+}
+.btn.btn-primary:hover i{
+    color:white;
+}
+.table{
+    color:white !important;
 }

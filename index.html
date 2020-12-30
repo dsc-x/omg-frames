@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link crossorigin="anonymous" href="https://fonts.googleapis.com/icon?family=Google+Sans:400&display=swap"
           rel="stylesheet"/>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+          integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="css/styleindex.css">
@@ -119,7 +121,18 @@
                         <input type="email" class="form-control" placeholder="E-mail" id="email" data-rule-required="true" data-msg-required="Enter Email">
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" placeholder="Password" id="password" data-rule-required="true" data-msg-required="Enter Password" minlength="6" data-msg-number="Please enter at least 6 characters">
+                        <div class="row">
+                            <div class="col-10">
+                                <input type="password" class="form-control" placeholder="Password" id="password"
+                                       data-rule-required="true" data-msg-required="Enter Password"
+                                       minlength="6" data-msg-number="Please enter at least 6 characters">
+                            </div>
+                            <div class="col-1">
+                                <span onclick="showpassword('shpasslogin','password')" class="btn btn-primary"
+                                      style="font-size:10px;margin-top: 10px;"><i id="shpasslogin"
+                                                                                  class="fa fa-eye"></i></span>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <button class="btn btn-block btn-primary" type="submit">SIGN IN</button>
@@ -166,10 +179,30 @@
                         <input type="text" class="form-control" placeholder="Role" id="role" data-rule-required="true" data-msg-required="Enter Role">
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" placeholder="Password" id="passwordnew" data-rule-required="true" data-msg-required="Enter Password" minlength="6">
+                        <div class="row">
+                            <div class="col-10">
+                                <input type="password" class="form-control" placeholder="Password" id="passwordnew"
+                                       data-rule-required="true" data-msg-required="Enter Password" minlength="6"
+                                       data-msg-number="Please enter at least 6 characters">
+                            </div>
+                            <div class="col-1">
+                                <span onclick="generatepassword('passwordnew')" class="btn btn-primary"
+                                      style="font-size: 10px;margin-top: 10px;"><i class="fa fa-key"></i>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" placeholder="Confirm Password" data-rule-required="true" data-msg-required="Confirm Your Password" data-rule-equalto="#passwordnew">
+                        <div class="row">
+                            <div class="col-10">
+                                <input type="password" class="form-control" id="confirmpassword" placeholder="Confirm Password"
+                                       data-rule-required="true" data-msg-required="Confirm Your Password"
+                                       data-rule-equalto="#passwordnew" data-msg-equalto="Enter Same Password Again">
+                            </div>
+                            <div class="col-1">
+                                <span onclick="showpassword('shpassconfirm','confirmpassword');showpassword('shpassconfirm','passwordnew')" class="btn btn-primary" style="font-size:10px;margin-top: 10px;"><i id="shpassconfirm" class="fa fa-eye"></i></span>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <button class="btn btn-block btn-primary" type="submit">SIGN UP</button>
@@ -187,6 +220,24 @@
     </div>
 </div>
 <!--Sign Up Modal-->
+
+<!--userinfo-->
+<div class="modal fade" id="userinfo" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h5 class="modal-title w-100">Account Information</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center" id="bodyuserinfo">
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--userinfo-->
 
 <div class="modal fade" id="alertpopup" tabindex="-1" role="dialog" aria-hidden="true" style="overflow-y: auto">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -255,6 +306,7 @@
         }
         createordestroybutton('index');
         dashboardandgallerybutton();
+        userinfodisplay();
     }
 </script>
 <!--lightdark-->

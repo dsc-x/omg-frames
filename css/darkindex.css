@@ -48,14 +48,14 @@ a,div,p{
 .subbannertext {
     color: #b1afaf !important;
 }
-.navbar-toggler{
+.navbar-toggler, img[alt="user"]{
     filter: invert(100%);
 }
 .addborderbottom {
     border-bottom: 1px solid #7d7d7d;
 }
 .error{
-    color:#28ff03;
+    color:#ff7a7a;
     padding: 2px 2px;
 }
 .dropdown-divider{
@@ -68,4 +68,13 @@ a,div,p{
     background: #f8f9fa;
     border-radius: 10px;
     color: black;
+}
+.btn.btn-primary i{
+    color:black;
+}
+.btn.btn-primary:hover i{
+    color:white;
+}
+.table{
+    color:white !important;
 }

@@ -22,15 +22,22 @@ function createordestroybutton(win) {
 }
 
 function dashboardandgallerybutton() {
-    var token=sessionStorage.getItem('token');
-    var el=document.getElementById('top');
-    if(document.getElementById('btns')!=undefined){
+    var token = sessionStorage.getItem('token');
+    var el = document.getElementById('top');
+    var eluser = document.querySelector('#navmenu .navbar-nav');
+    if (document.getElementById('btns') != undefined) {
         el.removeChild(document.getElementById('btns'));
     }
-    var div=document.createElement('div');
-    div.id='btns';
-    if(token!=null){
-        var temp='<div class="text-center row">\n' +
+    if (document.getElementById('user') != undefined) {
+        eluser.removeChild(document.getElementById('user'));
+    }
+    var div = document.createElement('div');
+    div.id = 'btns';
+    if (token != null) {
+        var tempuserinfo = '<div id="user" onclick="$(\'#userinfo\').modal(\'show\')" style="cursor: pointer;display: inline"><img style="height: 30px;" src="svglogos/user.svg" alt="user">\n' +
+            '           </div>';
+        eluser.innerHTML += tempuserinfo;
+        var temp = '<div class="text-center row">\n' +
             '                    <div class="col-6">\n' +
             '                        <button type="button" onclick="window.open(\'dashboard.html\',\'_self\')" class="btn btn-primary"\n' +
             '                                style="width: 150px;">View Dashboard\n' +
@@ -40,20 +47,20 @@ function dashboardandgallerybutton() {
             '                        <button type="button" onclick="opengallery();" class="btn btn-outline-primary" style="width: 150px">View Gallery</button>\n' +
             '                    </div>\n' +
             '                </div>'
-        div.innerHTML=temp;
-    }else{
-        var temp='<div class="row text-center">\n' +
+        div.innerHTML = temp;
+    } else {
+        var temp = '<div class="row text-center">\n' +
             '                    <div class="col-12">\n' +
             '                        <button type="button" onclick="$(\'#loginpopup\').modal(\'show\');" class="btn btn-outline-primary" style="font-size: 22px;">Get Started</button>\n' +
             '                    </div>\n' +
             '                </div>'
-        div.innerHTML=temp;
+        div.innerHTML = temp;
     }
     el.appendChild(div);
 }
 
-function checkloginindashboard(){
-    if(sessionStorage.getItem('token')==null){
+function checkloginindashboard() {
+    if (sessionStorage.getItem('token') == null) {
         $('#loginpopup').modal('show');
     }
 }
@@ -93,6 +100,20 @@ function signup() {
     xhttp.send(JSON.stringify({email: email, name: name, organisation: organization, password: password, role: role}));
 }
 
+function userinfodisplay() {
+    var el = document.getElementById('bodyuserinfo');
+    var userinfo = JSON.parse(sessionStorage.getItem('userinfo'));
+    var temp = '<table class="table">'
+    for (i in userinfo) {
+        temp += '<tr>';
+        temp += '<td>' + i + '</td>';
+        temp += '<td>' + userinfo[i] + '</td>';
+        temp += '</tr>'
+    }
+    temp += '</div>'
+    el.innerHTML = temp;
+}
+
 function login(win) {
     var email = document.getElementById('email').value;
     var password = document.getElementById('password').value;
@@ -101,9 +122,16 @@ function login(win) {
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 202) {
             loader('hide');
-            // alertpopup('Welcome! ' + JSON.parse(this.responseText)["data"]["name"], 'open');
+            var userinfo = {
+                "Name": JSON.parse(this.responseText)["name"],
+                "E-mail": JSON.parse(this.responseText)["email"],
+                "Organisation": JSON.parse(this.responseText)["organisation"],
+                "Role": JSON.parse(this.responseText)["role"]
+            };
+            sessionStorage.setItem('userinfo', JSON.stringify(userinfo));
             sessionStorage.setItem('token', JSON.parse(this.responseText)["token"]);
             createordestroybutton(win);
+            userinfodisplay();
             if (win == 'gallery') {
                 getframes();
             }
@@ -132,74 +160,74 @@ function login(win) {
 }
 
 function deleteframe(frameid) {
-    loader('show');
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 201) {
-            loader('hide');
-            getframes();
-        }
-    };
-    xhttp.open("DELETE", "https://api.iwasat.events/api/v1/frames?id=" + frameid, true);
-    xhttp.onerror = function () {
-        loader('hide');
-        alertpopup("Unexpected Error!", 'open');
-    };
-    xhttp.setRequestHeader("Accept", "application/json");
-    xhttp.setRequestHeader("Authorization", `Bearer ${sessionStorage.getItem('token')}`);
-    xhttp.send();
-}
-
-function getframes() {
-    var token = sessionStorage.getItem('token');
-    if (token == null) {
-        window.open('dashboard.html');
-    } else {
+    if (confirm("Delete this Frame?")) {
         loader('show');
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 201) {
-                var arrayofframes = JSON.parse(this.responseText)["frames"];
-                if (arrayofframes.length === 0) {
-                    var temp = '<div class="text-center">\n' +
-                        '        <div>It Seems No Saved Frames Yet!</div>\n' +
-                        '        <span class="btn btn-outline-primary" onclick="window.open(\'dashboard.html\',\'_self\')"><img src="svglogos/add.svg" style="height: 20px;padding-right: 10px;padding-bottom: 3px;" alt="add">New Badge</span>\n' +
-                        '    </div>';
-                    document.querySelector(".container").innerHTML = temp;
-                } else {
-                    var temp = "";
-                    for (var i = 0; i < arrayofframes.length; i++) {
-                        temp += '<div class="col-sm-4">'
-                        temp += '<img class="displayframeimage" src="' + arrayofframes[i]["frame_data"] + '">'
-                        temp += '<div class="overlay">'
-                        temp += '<div class="text">' +
-                            '<ul class="list">' +
-                            '<li onclick="download(\'' + arrayofframes[i]["frame_data"] + '\');"><span><img src="svglogos/download.svg" class="iconsimagehover">Download</span></li>' +
-                            '<li onclick="deleteframe(\'' + arrayofframes[i]["frame_id"] + '\');"><span><img src="svglogos/delete.svg" class="iconsimagehover">Delete&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li>' +
-                            // '<li onclick="set(\'' + arrayofframes[i]["frame_data"] + '\');"><span><img src="svglogos/delete.svg" class="iconsimagehover">Edit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li>' +
-                            '</ul>' +
-                            '</div>'
-                        temp += '</div>'
-                        temp += '</div>'
-                    }
-                    document.getElementById('main').innerHTML = temp;
-                }
                 loader('hide');
-            } else if (this.readyState == 4 && this.status == 401) {
-                loader('hide');
-                alertpopup(this.responseText, 'open');
+                getframes();
             }
         };
-        xhttp.open("GET", "https://api.iwasat.events/api/v1/frames", true);
+        xhttp.open("DELETE", "https://api.iwasat.events/api/v1/frames?id=" + frameid, true);
         xhttp.onerror = function () {
             loader('hide');
             alertpopup("Unexpected Error!", 'open');
         };
         xhttp.setRequestHeader("Accept", "application/json");
-        xhttp.setRequestHeader("Content-type", "application/json");
         xhttp.setRequestHeader("Authorization", `Bearer ${sessionStorage.getItem('token')}`);
         xhttp.send();
     }
+}
+
+function getframes() {
+    var token = sessionStorage.getItem('token');
+    loader('show');
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 201) {
+            var arrayofframes = JSON.parse(this.responseText)["frames"];
+            if (arrayofframes.length === 0) {
+                var temp = '<div class="text-center">\n' +
+                    '        <div>It Seems No Saved Frames Yet!</div>\n' +
+                    '        <span class="btn btn-outline-primary" onclick="window.open(\'dashboard.html\',\'_self\')"><img src="svglogos/add.svg" style="height: 20px;padding-right: 10px;padding-bottom: 3px;" alt="add">New Badge</span>\n' +
+                    '    </div>';
+                document.querySelector(".container").innerHTML = temp;
+            } else {
+                var temp = "";
+                for (var i = 0; i < arrayofframes.length; i++) {
+                    temp += '<div class="col-sm-4">'
+                    temp += '<img class="displayframeimage" src="' + arrayofframes[i]["frame_data"] + '">'
+                    temp += '<div class="overlay">'
+                    temp += '<div class="text">' +
+                        '<ul class="list">' +
+                        '<li onclick="download(\'' + arrayofframes[i]["frame_data"] + '\');"><span><img src="svglogos/download.svg" class="iconsimagehover">Download</span></li>' +
+                        '<li onclick="deleteframe(\'' + arrayofframes[i]["frame_id"] + '\');"><span><img src="svglogos/delete.svg" class="iconsimagehover">Delete&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li>' +
+                        // '<li onclick="set(\'' + arrayofframes[i]["frame_data"] + '\');"><span><img src="svglogos/delete.svg" class="iconsimagehover">Edit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li>' +
+                        '</ul>' +
+                        '</div>'
+                    temp += '</div>'
+                    temp += '</div>'
+                }
+                document.getElementById('main').innerHTML = temp;
+            }
+            loader('hide');
+        } else if (this.readyState == 4 && this.status == 401) {
+            loader('hide');
+            alertpopup(this.responseText, 'open');
+        }
+    };
+    xhttp.open("GET", "https://api.iwasat.events/api/v1/frames", true);
+
+    xhttp.onerror = function () {
+        loader('hide');
+        alertpopup("Unexpected Error!", 'open');
+    };
+    xhttp.setRequestHeader("Accept", "application/json");
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.setRequestHeader("Authorization", `Bearer ${sessionStorage.getItem('token')}`);
+    xhttp.send();
+
 }
 
 function saveframe() {
@@ -210,6 +238,7 @@ function saveframe() {
         var dataurl = canvas.toDataURL("image/png;base64");
         var xhttp = new XMLHttpRequest();
         loader('show');
+
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 201) {
                 loader('hide');
@@ -242,14 +271,14 @@ function resetpassword() {
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             loader('hide');
-            alertpopup('Reset Link Sent to your E-mail','open');
+            alertpopup('Reset Link Sent to your E-mail', 'open');
         } else if (this.readyState == 4 && this.status == 400) {
             loader('hide');
             alertpopup('Enter E-mail', 'open');
-        }else if(this.readyState == 4 && this.status == 401){
+        } else if (this.readyState == 4 && this.status == 401) {
             loader('hide');
             alertpopup('Seems there\'s no Account Registered with this E-mail', 'open');
-        }else if(this.readyState == 4 && this.status == 500){
+        } else if (this.readyState == 4 && this.status == 500) {
             loader('hide');
             alertpopup('Internal Server Error!', 'open');
         }
@@ -267,24 +296,24 @@ function resetpassword() {
 function updatepassword() {
     var password = document.getElementById('password').value;
     const params = new URLSearchParams(window.location.search)
-    var resettoken=params.get('token');
+    var resettoken = params.get('token');
 
     loader('show');
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             loader('hide');
-            alertpopup('Password Changed Successfully','open');
+            alertpopup('Password Changed Successfully', 'open');
             setTimeout(function () {
-                window.open('dashboard.html','_self');
-            },2000);
+                window.open('dashboard.html', '_self');
+            }, 2000);
         } else if (this.readyState == 4 && this.status == 400) {
             loader('hide');
             alertpopup('Token or Password is absent in the request body', 'open');
-        }else if(this.readyState == 4 && this.status == 401){
+        } else if (this.readyState == 4 && this.status == 401) {
             loader('hide');
             alertpopup('Invalid Token!', 'open');
-        }else if(this.readyState == 4 && this.status == 500){
+        } else if (this.readyState == 4 && this.status == 500) {
             loader('hide');
             alertpopup('Internal Server Error!', 'open');
         }
@@ -296,19 +325,19 @@ function updatepassword() {
         alertpopup("Unexpected Error!", 'open');
     };
     xhttp.setRequestHeader("Content-type", "application/json");
-    xhttp.send(JSON.stringify({password: password,token:resettoken}));
+    xhttp.send(JSON.stringify({password: password, token: resettoken}));
 }
 
 function logout(win) {
     sessionStorage.removeItem('token');
+    sessionStorage.removeItem('userinfo');
     createordestroybutton('index');
     createordestroybutton('dashboard');
     if (win == 'gallery') {
         $('#loginpopup').modal('show');
-    }
-    else if(win=='index'){
+    } else if (win == 'index') {
         dashboardandgallerybutton();
-    }else if(win=='dashboard'){
+    } else if (win == 'dashboard') {
         checkloginindashboard();
     }
 }

@@ -25,6 +25,9 @@
     background: #0046ff;
     color: #f8f9fa;
 }
+.btn-primary:active{
+    color:black;
+}
 .main-nav li[selected] .nav-text {
     color: #87CEEB !important;
 }
@@ -74,14 +77,14 @@ a,span,div,p{
 .select[selected]{
     color: #f8f9fa !important;
 }
-img[alt="delete"],img[alt="edit"],img[alt="undo"],img[alt="redo"],img[alt="darkmode"],img[alt="gallery"]{
+img[alt="delete"],img[alt="edit"],img[alt="undo"],img[alt="redo"],img[alt="darkmode"],img[alt="gallery"],img[alt="user"]{
     filter:invert(100%);
 }
 .navbar-toggler{
     filter: invert(100%);
 }
 .error{
-    color:#28ff03;
+    color:#ff7a7a;
     padding: 2px 2px;
 }
 .dropdown-divider{
@@ -98,4 +101,12 @@ canvas{
     border-radius: 10px;
     color: black;
 }
-
+.btn.btn-primary i{
+    color:black;
+}
+.btn.btn-primary:hover i{
+    color:white;
+}
+.table{
+    color:white !important;
+}

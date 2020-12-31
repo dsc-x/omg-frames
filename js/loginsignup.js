@@ -35,7 +35,7 @@ function dashboardandgallerybutton() {
     div.id = 'btns';
     if (token != null) {
         var tempuserinfo = '<div id="user" onclick="$(\'#userinfo\').modal(\'show\')" style="cursor: pointer;display: inline"><img style="height: 30px;" src="svglogos/user.svg" alt="user">\n' +
-            '           </div>';
+            '           </div><div class="dropdown-divider"></div>';
         eluser.innerHTML += tempuserinfo;
         var temp = '<div class="text-center row">\n' +
             '                    <div class="col-6">\n' +

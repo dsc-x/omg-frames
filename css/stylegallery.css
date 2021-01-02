@@ -8,8 +8,8 @@ body {
     text-align: center;
 }
 .btn-primary {
-    background: #0046ff;
-    border-color: #0046ff;
+    background: #0094FF;
+    border-color: #0094FF;
 }
 
 .btn-primary:hover {
@@ -18,14 +18,14 @@ body {
     color: black;
 }
 .btn-outline-primary {
-    color: #0046ff;
-    border-color: #0046ff;
+    color: #0094FF;
+    border-color: #0094FF;
 }
 
 .btn-outline-primary:hover {
     color: white;
-    border-color: #0046ff;
-    background: #0046ff;
+    border-color: #0094FF;
+    background: #0094FF;
 }
 
 .col-4 {
@@ -80,11 +80,11 @@ body {
 }
 
 input:checked + .slider {
-    background-color: #0046ff;
+    background-color: #0094FF;
 }
 
 input:focus + .slider {
-    box-shadow: 0 0 1px #0046ff;
+    box-shadow: 0 0 1px #0094FF;
 }
 
 input:checked + .slider:before {
@@ -101,11 +101,6 @@ input:checked + .slider:before {
     border-radius: 50%;
 }
 
-.alertpopup {
-    background: #343a40;
-    border-radius: 10px;
-    color: white;
-}
 
 @media (min-width: 768px) {
     .centeraccording {
@@ -124,11 +119,6 @@ input:checked + .slider:before {
     color: red;
     padding: 2px 2px;
 }
-
-#alerttext {
-    color: black;
-}
-
 .displayframeimage {
     background: url('../images/transparent.jpg');
     padding: .25rem;
@@ -227,7 +217,7 @@ input:checked + .slider:before {
     transition: .4s;
 }
 img[alt="add"],img[alt="addnewbatch"]{
-    filter:invert(45%) sepia(234%) saturate(7349%) hue-rotate(229deg) brightness(120%) contrast(205%);
+    filter: invert(44%) sepia(42%) saturate(4924%) hue-rotate(185deg) brightness(102%) contrast(104%);
 }
 .btn-outline-primary:hover img[alt="add"]{
     filter:invert(100%);

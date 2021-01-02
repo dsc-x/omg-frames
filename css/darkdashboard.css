@@ -90,17 +90,11 @@ img[alt="delete"],img[alt="edit"],img[alt="undo"],img[alt="redo"],img[alt="darkm
 .dropdown-divider{
     border-color: #7d7d7d;
 }
-#alerttext{
-    color:black !important;
-}
+
 canvas{
     border: 1px solid #f8f9fa !important;
 }
-.alertpopup {
-    background: #f8f9fa;
-    border-radius: 10px;
-    color: black;
-}
+
 .btn.btn-primary i{
     color:black;
 }

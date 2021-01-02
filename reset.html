@@ -12,6 +12,41 @@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
           integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <link rel="stylesheet" href="css/styleforgotpassword.css">
+    <!--    scrollbar-->
+    <style>
+        /* width */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 5px grey;
+            border-radius: 10px;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #0094ff;
+            border-radius: 10px;
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0094ff;
+        }
+
+        .hidescroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .hidescroll {
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none; /* Firefox */
+        }
+
+    </style>
+    <!--    scrollbar-->
 </head>
 <body>
 <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top addborderbottom">
@@ -65,7 +100,6 @@
                         <input type="submit" class="btn btn-primary" value="Proceed" style="margin: auto;width: 28vw;">
                     </div>
                 </div>
-
             </div>
         </form>
     </div>
@@ -73,8 +107,8 @@
 
 <div class="modal fade" id="alertpopup" tabindex="-1" role="dialog" aria-hidden="true" style="overflow-y: auto">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content" style="border-radius: 10px;">
-            <div class="modal-body alertpopup text-center" id="alerttext">
+        <div class="modal-content" style="border-radius: 10px;" >
+            <div class="modal-body text-center" id="alerttext" style="border-radius: 10px;color:white;">
             </div>
         </div>
     </div>

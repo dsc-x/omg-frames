@@ -65,11 +65,7 @@ a,div,p{
 .dropdown-divider{
     border-color: #7d7d7d;
 }
-.alertpopup {
-    background: #f8f9fa;
-    border-radius: 10px;
-    color: black;
-}
+
 .iconsimagehover {
     filter: invert(100%);
 }

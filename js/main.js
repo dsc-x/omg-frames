@@ -66,65 +66,32 @@ function addselected(add) {
 
 }
 
-function opengallery(){
-    var token=sessionStorage.getItem('token');
-    if(token==null){
+function opengallery() {
+    var token = sessionStorage.getItem('token');
+    if (token == null) {
         $('#loginpopup').modal('show');
-    }else{
-        window.open('gallery.html','_parent');
+    } else {
+        window.open('gallery.html', '_parent');
     }
 }
 
 function download(url) {
     const a = document.createElement("a");
-    var filename=prompt("Please Enter Filename", "badge");
-    if(filename!=null){
+    var filename = prompt("Please Enter Filename", "badge");
+    if (filename != null) {
         a.download = filename;
         a.href = url;
         a.click();
     }
-
 }
 
-var img;
-function deleteimg() {
-    // document.querySelector("input.profile-input").value='';
-    img=new Image();
-    img.crossOrigin='anonymous';
-    img.src=canvas.toDataURL('image/png;base64');
-    start()
-}
-
-function start(){
-    var w=prompt("Enter Scale Factor",2);
-    resizeImg(img,w);
-}
-
-function resizeImg(img,scaleFactor){
-    var c=document.createElement('canvas');
-    var ctx=c.getContext('2d');
-    var iw=img.width;
-    var ih=img.height;
-    c.width=iw*scaleFactor;
-    console.log("Width "+c.width)
-    c.height=ih*scaleFactor;
-    console.log("Height "+c.height)
-    ctx.drawImage(img,0,0,iw*scaleFactor,ih*scaleFactor);
-    var scaledImg=new Image();
-    scaledImg.onload=function(){
-        // scaledImg is a scaled imageObject for upload/download
-        download(c.toDataURL('image/png;base64'));
-    }
-    scaledImg.src=c.toDataURL();
-}
-
-function loader(action){
+function loader(action) {
     var body = document.getElementsByTagName("body");
     var head = document.getElementsByTagName("head");
     switch (action) {
         case 'show':
             var style = document.createElement('style');
-            var div=document.createElement("div");
+            var div = document.createElement("div");
             var css = ".sk-chase {\n" +
                 "            width: 40px;\n" +
                 "            height: 40px;\n" +
@@ -180,19 +147,19 @@ function loader(action){
                 "              }\n" +
                 "        }"
             style.type = 'text/css';
-            if (style.styleSheet){
+            if (style.styleSheet) {
                 // This is required for IE8 and below.
                 style.styleSheet.cssText = css;
             } else {
                 style.appendChild(document.createTextNode(css));
             }
-            div.id="loader";
-            div.style.cssText="position: fixed;\n" +
+            div.id = "loader";
+            div.style.cssText = "position: fixed;\n" +
                 "            z-index:5000;\n" +
                 "            width: 100%;\n" +
                 "            height: 100%;\n" +
                 "            background: rgba(4,4,4,0.8);";
-            div.innerHTML='<div style="margin:auto;\n' +
+            div.innerHTML = '<div style="margin:auto;\n' +
                 '            position: absolute;\n' +
                 '            top:46%;\n' +
                 '            left:46%;">\n' +
@@ -203,7 +170,7 @@ function loader(action){
                 '  <div class="sk-chase-dot"></div>\n' +
                 '  <div class="sk-chase-dot"></div>\n' +
                 '  <div class="sk-chase-dot"></div>\n' +
-                '</div>'+
+                '</div>' +
                 '    </div>'
             head[0].appendChild(style);
             body[0].prepend(div);
@@ -216,10 +183,12 @@ function loader(action){
 
 }
 
-function alertpopup(text, par) {
+function alertpopup(text, par,color) {
     document.getElementById('alerttext').innerHTML = text;
     if (par == 'open') {
         $('#alertpopup').modal('show');
+        $('#alerttext').css('background',color);
+        $('#alertpopup').css('background','rgba(4,4,4,0.8)');
     } else {
         $('#alertpopup').modal('hide');
     }
@@ -238,15 +207,52 @@ function generatepassword(elid) {
     document.getElementById(elid).value = pass;
 }
 
-function showpassword(iid,elid){
-    var el=document.getElementById(elid);
-    if(el.type=='password'){
-        $(String('#'+iid)).removeClass('fa-eye');
-        $(String('#'+iid)).addClass('fa-eye-slash');
-        el.type='text';
+function showpassword(iid, elid) {
+    var el = document.getElementById(elid);
+    if (el.type == 'password') {
+        $(String('#' + iid)).removeClass('fa-eye');
+        $(String('#' + iid)).addClass('fa-eye-slash');
+        el.type = 'text';
+    } else {
+        $(String('#' + iid)).addClass('fa-eye');
+        $(String('#' + iid)).removeClass('fa-eye-slash');
+        el.type = 'password';
+    }
+}
+
+var flag;
+function enablefullscreen() {
+    if (flag === 0) {
+        closefullscreen();
+    } else if (flag === 1) {
+        openfullscreen();
     }else{
-        $(String('#'+iid)).addClass('fa-eye');
-        $(String('#'+iid)).removeClass('fa-eye-slash');
-        el.type='password';
+        openfullscreen();
+    }
+}
+function closefullscreen() {
+    var elem = document.documentElement;
+    if (document.exitFullscreen) {
+        document.exitFullscreen();
+        flag = 1;
+    } else if (document.webkitExitFullscreen) { /* Safari */
+        document.webkitExitFullscreen();
+        flag = 1;
+    } else if (document.msExitFullscreen) { /* IE11 */
+        document.msExitFullscreen();
+        flag = 1;
+    }
+}
+function openfullscreen() {
+    var elem = document.documentElement;
+    if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+        flag = 0;
+    } else if (elem.webkitRequestFullscreen) { /* Safari */
+        elem.webkitRequestFullscreen();
+        flag = 0;
+    } else if (elem.msRequestFullscreen) { /* IE11 */
+        elem.msRequestFullscreen();
+        flag = 0;
     }
 }

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <title>iWasAt-Dashboard</title>
-    <meta name="description" content="Badge Generator - OMG - Developer Student Clubs"/>
+    <meta name="description" content="Event Badge Generator"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link crossorigin="anonymous" href="https://fonts.googleapis.com/icon?family=Google+Sans:400&display=swap"
           rel="stylesheet"/>
@@ -13,6 +13,7 @@
 
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.2/croppie.css">
     <link rel="stylesheet" href="css/styledashboard.css">
+    <!--    scrollbar-->
     <style>
         /* width */
         ::-webkit-scrollbar {
@@ -27,13 +28,13 @@
 
         /* Handle */
         ::-webkit-scrollbar-thumb {
-            background: #0046ff;
+            background: #0094ff;
             border-radius: 10px;
         }
 
         /* Handle on hover */
         ::-webkit-scrollbar-thumb:hover {
-            background: #0046ff;
+            background: #0094ff;
         }
 
         .hidescroll::-webkit-scrollbar {
@@ -46,7 +47,9 @@
         }
 
     </style>
+    <!--    scrollbar-->
 
+    <!--    side nav-->
     <style>
 
         .main-nav img {
@@ -65,11 +68,11 @@
         }
 
         .main-nav li[selected] .nav-text {
-            color: #0046ff !important;
+            color: #0094ff !important;
         }
 
         .main-nav li[selected] img {
-            filter: invert(13%) sepia(74%) saturate(7348%) hue-rotate(229deg) brightness(104%) contrast(103%);
+            filter: invert(44%) sepia(42%) saturate(4924%) hue-rotate(185deg) brightness(102%) contrast(104%);
         }
 
         .main-nav > ul {
@@ -112,7 +115,7 @@
             }
 
             .main-nav li:hover {
-                border-right: 2px solid #0046ff;
+                border-right: 2px solid #0094ff;
             }
 
             .main-nav {
@@ -214,6 +217,7 @@
 
         }
     </style>
+    <!--    side nav-->
 </head>
 <body>
 <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top addborderbottom">
@@ -227,12 +231,14 @@
     </button>
     <div class="collapse navbar-collapse text-center" id="navmenu">
         <ul class="navbar-nav mr-auto">
-            <div onclick="$('#userinfo').modal('show')" style="cursor: pointer;display: inline"><img style="height: 30px;" src="svglogos/user.svg" alt="user">
+            <div onclick="$('#userinfo').modal('show')" style="cursor: pointer;display: inline"><img
+                    style="height: 30px;" src="svglogos/user.svg" alt="user">
             </div>
         </ul>
         <div class="dropdown-divider"></div>
         <div class="text-center">
-            <div style="cursor: pointer;display: inline;padding-right: 10px;"><img style="height: 15px;" src="svglogos/undo.svg" alt="undo">
+            <div style="cursor: pointer;display: inline;padding-right: 10px;"><img style="height: 15px;"
+                                                                                   src="svglogos/undo.svg" alt="undo">
             </div>
             <div style="cursor: pointer;display: inline"><img style="height: 15px;" src="svglogos/redo.svg" alt="redo">
             </div>
@@ -304,7 +310,7 @@
             </a>
         </li>
         <!--        openclosecontentinmiddle('editingimage');-->
-        <li id="fullscreenselectoroption" onclick="fullscreen('t');addselected(this.id);">
+        <li id="fullscreenselectoroption" onclick="enablefullscreen();addselected(this.id);">
             <a>
                 <img src="svglogos/fullscreen.svg" alt="fullscreen">
                 <span class="nav-text">
@@ -417,6 +423,7 @@
             <!--            Editing the image Section-->
             <div class="collapse row" id="editingimage">
                 <div id="imageforcrop" style="width:350px; margin-top:30px"></div>
+
             </div>
             <!--            Editing the image Section-->
         </div>
@@ -545,12 +552,15 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-10">
-                                <input type="password" class="form-control" id="confirmpassword" placeholder="Confirm Password"
+                                <input type="password" class="form-control" id="confirmpassword"
+                                       placeholder="Confirm Password"
                                        data-rule-required="true" data-msg-required="Confirm Your Password"
                                        data-rule-equalto="#passwordnew" data-msg-equalto="Enter Same Password Again">
                             </div>
                             <div class="col-1">
-                                <span onclick="showpassword('shpassconfirm','confirmpassword');showpassword('shpassconfirm','passwordnew')" class="btn btn-primary" style="font-size:10px;margin-top: 10px;"><i id="shpassconfirm" class="fa fa-eye"></i></span>
+                                <span onclick="showpassword('shpassconfirm','confirmpassword');showpassword('shpassconfirm','passwordnew')"
+                                      class="btn btn-primary" style="font-size:10px;margin-top: 10px;"><i
+                                        id="shpassconfirm" class="fa fa-eye"></i></span>
                             </div>
                         </div>
                     </div>
@@ -592,10 +602,9 @@
 <div class="modal fade" id="alertpopup" tabindex="-1" role="dialog" aria-hidden="true" style="overflow-y: auto">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content" style="border-radius: 10px;">
-            <div class="modal-body alertpopup text-center" id="alerttext">
+            <div class="modal-body text-center" id="alerttext" style="border-radius: 10px;color:white;">
             </div>
         </div>
-
     </div>
 </div>
 
@@ -720,7 +729,7 @@
             reader.onload = (event) => {
                 $image_crop.croppie('bind', {
                     url: event.target.result
-                })
+                });
                 const img = new Image();
                 img.onload = () => {
                     image = img;
@@ -879,6 +888,7 @@
     })
 
 </script>
+
 <!--formvalidate-->
 <script src="js/croppie.js"></script>
 <script type="text/javascript" src="js/imageedit.js"></script>

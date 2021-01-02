@@ -178,7 +178,13 @@
                         <input type="text" class="form-control" placeholder="Organization Name" id="organization" data-rule-required="true" data-msg-required="Enter Oranization Name">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Role" id="role" data-rule-required="true" data-msg-required="Enter Role">
+                        <input class="form-control" type="text" list="roles" placeholder="Role" id="role" data-rule-required="true"
+                               data-msg-required="Enter Role">
+                        <datalist id="roles">
+                            <option value="Attendee">Attendee</option>
+                            <option value="Organizer">Organizer</option>
+                            <option value="Speaker">Speaker</option>
+                        </datalist>
                     </div>
                     <div class="form-group">
                         <div class="row">

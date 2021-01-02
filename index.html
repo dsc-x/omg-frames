@@ -1,11 +1,13 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Badge Generator - OMG - Developer Student Clubs</title>
+    <title>iWasAt-Badge Generator</title>
     <meta name="description" content="Badge Generator - OMG - Developer Student Clubs"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link crossorigin="anonymous" href="https://fonts.googleapis.com/icon?family=Google+Sans:400&display=swap"
           rel="stylesheet"/>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+          integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="css/styleindex.css">
@@ -46,7 +48,7 @@
 <body>
 
 <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top addborderbottom">
-    <div><img class="navbar-brand" style="height:45px;padding-right:5px;" src="images/omglogo.png" alt="omglogo"></div>
+    <div onclick="window.open('dashboard.html','_self')"><img class="navbar-brand" style="height:51px;padding-right:5px;" src="images/logo.png" alt="logo"></div>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navmenu" aria-controls="navmenu"
             aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -71,21 +73,10 @@
 <div class="container-fluid">
     <div class="row" style="padding-top: 10px;">
         <div class="col-md-6">
-            <div class="container">
-                <p class="mainbannertext">Welcome to <span class="bluecolor">OMG Frames</span></p>
+            <div class="container" id="top">
+                <p class="mainbannertext">Welcome to <span class="bluecolor">iWasAt</span></p>
                 <p class="mainbannertext">Develop frames for your favourite events</p>
                 <span class="subbannertext">Build a beautiful, modern frames with fully customizable color template.</span>
-
-                <div class="text-center row">
-                    <div class="col-6">
-                        <button type="button" onclick="window.open('dashboard.html','_self')" class="btn btn-primary"
-                                style="width: 150px;">View Dashboard
-                        </button>
-                    </div>
-                    <div class="col-6">
-                        <button type="button" onclick="opengallery();" class="btn btn-outline-primary" style="width: 150px">View Gallery</button>
-                    </div>
-                </div>
             </div>
 
         </div>
@@ -124,13 +115,24 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body text-center">
                 <form action="javascript:login('index')" id="loginform">
                     <div class="form-group">
-                        <input type="email" class="form-control" placeholder="E-mail" id="email" value="helloworld@gmail.com" data-rule-required="true" data-msg-required="Enter Email">
+                        <input type="email" class="form-control" placeholder="E-mail" id="email" data-rule-required="true" data-msg-required="Enter Email">
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" placeholder="Password" id="password" value="hello1234" data-rule-required="true" data-msg-required="Enter Password" minlength="6" data-msg-number="Please enter at least 6 characters">
+                        <div class="row">
+                            <div class="col-10">
+                                <input type="password" class="form-control" placeholder="Password" id="password"
+                                       data-rule-required="true" data-msg-required="Enter Password"
+                                       minlength="6" data-msg-number="Please enter at least 6 characters">
+                            </div>
+                            <div class="col-1">
+                                <span onclick="showpassword('shpasslogin','password')" class="btn btn-primary"
+                                      style="font-size:10px;margin-top: 10px;"><i id="shpasslogin"
+                                                                                  class="fa fa-eye"></i></span>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <button class="btn btn-block btn-primary" type="submit">SIGN IN</button>
@@ -138,7 +140,7 @@
                 </form>
 
                 <div class="form-group text-center">
-                    <span class="infosmall">Forgot <a href="#">Email/Password</a>?</span>
+                    <span class="infosmall">Forgot <a href="forgotpassword.html">Email/Password</a>?</span>
                 </div>
                 <div class="form-group text-center">
                     <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#signuppopup"
@@ -162,7 +164,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body text-center">
                 <form action="javascript:signup();" id="signupform">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Name" id="name" data-rule-required="true" data-msg-required="Please Enter Name">
@@ -177,10 +179,30 @@
                         <input type="text" class="form-control" placeholder="Role" id="role" data-rule-required="true" data-msg-required="Enter Role">
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" placeholder="Password" id="passwordnew" data-rule-required="true" data-msg-required="Enter Password">
+                        <div class="row">
+                            <div class="col-10">
+                                <input type="password" class="form-control" placeholder="Password" id="passwordnew"
+                                       data-rule-required="true" data-msg-required="Enter Password" minlength="6"
+                                       data-msg-number="Please enter at least 6 characters">
+                            </div>
+                            <div class="col-1">
+                                <span onclick="generatepassword('passwordnew')" class="btn btn-primary"
+                                      style="font-size: 10px;margin-top: 10px;"><i class="fa fa-key"></i>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" placeholder="Confirm Password" data-rule-required="true" data-msg-required="Confirm Your Password" data-rule-equalto="#passwordnew">
+                        <div class="row">
+                            <div class="col-10">
+                                <input type="password" class="form-control" id="confirmpassword" placeholder="Confirm Password"
+                                       data-rule-required="true" data-msg-required="Confirm Your Password"
+                                       data-rule-equalto="#passwordnew" data-msg-equalto="Enter Same Password Again">
+                            </div>
+                            <div class="col-1">
+                                <span onclick="showpassword('shpassconfirm','confirmpassword');showpassword('shpassconfirm','passwordnew')" class="btn btn-primary" style="font-size:10px;margin-top: 10px;"><i id="shpassconfirm" class="fa fa-eye"></i></span>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <button class="btn btn-block btn-primary" type="submit">SIGN UP</button>
@@ -198,6 +220,24 @@
     </div>
 </div>
 <!--Sign Up Modal-->
+
+<!--userinfo-->
+<div class="modal fade" id="userinfo" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h5 class="modal-title w-100">Account Information</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center" id="bodyuserinfo">
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--userinfo-->
 
 <div class="modal fade" id="alertpopup" tabindex="-1" role="dialog" aria-hidden="true" style="overflow-y: auto">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -231,17 +271,17 @@
         link.rel = 'stylesheet';
         link.type = 'text/css';
         link.href = 'css/darkindex.css';
-        var img = document.querySelector('img[alt="omglogo"]');
+        var img = document.querySelector('img[alt="logo"]');
         var labeldl = document.getElementById("darklighttext");
         if (dom.getAttribute('checked') != "") {
             localStorage.setItem("theme", "light");
             head[0].removeChild(head[0].lastChild);
             dom.setAttribute("checked", "");
             labeldl.innerText = "Light";
-            img.src = "images/omglogo.png";
+            img.src = "images/logo.png";
         } else {
             localStorage.setItem("theme", "dark");
-            img.src = "images/omglogodark.png";
+            img.src = "images/logodark.png";
             labeldl.innerText = "Dark";
             dom.removeAttribute("checked");
             head[0].appendChild(link);
@@ -256,15 +296,17 @@
             link.type = 'text/css';
             link.href = 'css/darkindex.css';
             var dom = document.getElementById('lightdarkbtn');
-            var img = document.querySelector('img[alt="omglogo"]');
+            var img = document.querySelector('img[alt="logo"]');
             var labeldl = document.getElementById("darklighttext");
 
-            img.src = "images/omglogodark.png";
+            img.src = "images/logodark.png";
             labeldl.innerText = "Dark";
             dom.removeAttribute("checked");
             head[0].appendChild(link);
         }
         createordestroybutton('index');
+        dashboardandgallerybutton();
+        userinfodisplay();
     }
 </script>
 <!--lightdark-->

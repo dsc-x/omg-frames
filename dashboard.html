@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Badge Generator - OMG - Developer Student Clubs</title>
+    <title>iWasAt-Dashboard</title>
     <meta name="description" content="Badge Generator - OMG - Developer Student Clubs"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link crossorigin="anonymous" href="https://fonts.googleapis.com/icon?family=Google+Sans:400&display=swap"
@@ -209,45 +209,40 @@
                 width: 4rem;
                 height: 10px;
                 font-size: 3.2vmin;
-                white-space:     nowrap;
+                white-space: nowrap;
             }
-            
+
         }
     </style>
 </head>
 <body>
-<!--<div class="loader">-->
-<!--    <div class="centerit">-->
-<!--        <div class="spinner-border text-light" role="status"></div>-->
-<!--    </div>-->
-
-<!--</div>-->
 <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top addborderbottom">
-    <div onclick="window.open('index.html');" style="cursor:pointer;"><img class="navbar-brand"
-                                                                           style="height:45px;padding-right:5px;"
-                                                                           src="images/omglogo.png" alt="omglogo"></div>
+    <div onclick="window.open('index.html','_self');" style="cursor:pointer;"><img class="navbar-brand"
+                                                                                   style="height:51px;padding-right:5px;"
+                                                                                   src="images/logo.png"
+                                                                                   alt="logo"></div>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navmenu" aria-controls="navmenu"
             aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse text-center" id="navmenu">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="index.html" target="_self">Home</a>
-            </li>
-            <div class="dropdown-divider"></div>
-            <li class="nav-item active" onclick="opengallery();">
-                <span class="nav-link">Gallery</span>
-            </li>
+            <div onclick="$('#userinfo').modal('show')" style="cursor: pointer;display: inline"><img style="height: 30px;" src="svglogos/user.svg" alt="user">
+            </div>
         </ul>
         <div class="dropdown-divider"></div>
         <div class="text-center">
-            <div style="display: inline;padding: 20px;">
-                <div style="display: inline;padding-right: 10px;font-size: 15px;">All Changes Saved</div>
-                <div style="display: inline;padding-right: 10px;"><img style="height: 15px;" src="svglogos/undo.svg"
-                                                                       alt="undo"></div>
-                <div style="display: inline"><img style="height: 15px;" src="svglogos/redo.svg" alt="redo"></div>
+            <div style="cursor: pointer;display: inline;padding-right: 10px;"><img style="height: 15px;" src="svglogos/undo.svg" alt="undo">
             </div>
+            <div style="cursor: pointer;display: inline"><img style="height: 15px;" src="svglogos/redo.svg" alt="redo">
+            </div>
+            <div style="padding-right: 10px;padding-left: 10px;font-size: 15px;">All Changes Saved</div>
+        </div>
+        <div class="dropdown-divider"></div>
+        <div class="text-center" onclick="opengallery();"
+             style="padding-right: 10px;padding-left: 10px;cursor: pointer;">
+            <img src="svglogos/gallery.svg" alt="gallery" style="display:block;height:28px;margin: auto;">
+            <span>Gallery</span>
         </div>
         <div class="dropdown-divider"></div>
         <div class="centeraccording">
@@ -259,15 +254,13 @@
         </div>
         <div class="dropdown-divider"></div>
     </div>
-
-
 </nav>
 <nav class="main-nav addborderright">
     <ul>
         <li onclick="uploadImage();addselected(this.id);" id="imageselectoroption">
             <a>
                 <input class="profile-input" type="file" accept="image/*" onchange="upload(event)" hidden/>
-                <img src="svglogos/user.svg" alt="profilepicture">
+                <img src="svglogos/picture.svg" alt="profilepicture">
                 <span class="nav-text">
                     Picture
                 </span>
@@ -319,6 +312,7 @@
                 </span>
             </a>
         </li>
+        <!--        <button type="button" onclick="edit();">EDIT</button>-->
     </ul>
 </nav>
 <div style="padding-top:15px;" class="container-fluid">
@@ -357,10 +351,12 @@
                                  onclick="changeShape('original');originalimage()">
                                 Original
                             </div>
-                            <div class="btn btn-outline-primary select selectbtn" id="square" onclick="changeShape('square')">
+                            <div class="btn btn-outline-primary select selectbtn" id="square"
+                                 onclick="changeShape('square')">
                                 Square
                             </div>
-                            <div class="btn btn-outline-primary select selectbtn" id="circle" onclick="changeShape('circle')">
+                            <div class="btn btn-outline-primary select selectbtn" id="circle"
+                                 onclick="changeShape('circle')">
                                 Circle
                             </div>
                         </div>
@@ -429,8 +425,8 @@
             <div class="text-center">
                 <span onclick="fullscreen('o');openclosecontentinmiddle('editingimage');"><img
                         src="svglogos/edit-button.svg" alt="edit" style="height: 20px;cursor: pointer;"></span>
-                <span onclick="deleteimg()"><img src="svglogos/delete.svg" alt="delete"
-                                                    style="height: 20px;cursor: pointer;"></span>
+                <span><img src="svglogos/delete.svg" alt="delete"
+                           style="height: 20px;cursor: pointer;"></span>
             </div>
             <div class="text-center" style="padding-top:5vh;">
                 <canvas></canvas>
@@ -458,25 +454,32 @@
     </div>
 </div>
 <!-- Login Modal -->
-<div class="modal fade" id="loginpopup" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="loginpopup" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false"
+     data-backdrop="static">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header text-center">
                 <h5 class="modal-title w-100">Account Login</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body text-center">
                 <form action="javascript:login('dashboard')" id="loginform">
                     <div class="form-group">
-                        <input type="email" class="form-control" placeholder="E-mail" id="email"
-                               value="helloworld@gmail.com" data-rule-required="true" data-msg-required="Enter Email">
+                        <input type="email" class="form-control" placeholder="E-mail" id="email">
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" placeholder="Password" id="password"
-                               value="hello1234" data-rule-required="true" data-msg-required="Enter Password"
-                               minlength="6" data-msg-number="Please enter at least 6 characters">
+                        <div class="row">
+                            <div class="col-10">
+                                <input type="password" class="form-control" placeholder="Password" id="password"
+                                       data-rule-required="true" data-msg-required="Enter Password"
+                                       minlength="6" data-msg-number="Please enter at least 6 characters">
+                            </div>
+                            <div class="col-1">
+                                <span onclick="showpassword('shpasslogin','password')" class="btn btn-primary"
+                                      style="font-size:10px;margin-top: 10px;"><i id="shpasslogin"
+                                                                                  class="fa fa-eye"></i></span>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="form-group">
                         <button class="btn btn-block btn-primary" type="submit">SIGN IN</button>
@@ -484,7 +487,7 @@
                 </form>
 
                 <div class="form-group text-center">
-                    <span class="infosmall">Forgot <a href="#">Email/Password</a>?</span>
+                    <span class="infosmall">Forgot <a href="forgotpassword.html">Email/Password</a>?</span>
                 </div>
                 <div class="form-group text-center">
                     <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#signuppopup"
@@ -499,34 +502,57 @@
 <!--Login Modal-->
 
 <!--Sign Up Modal-->
-<div class="modal fade" id="signuppopup" tabindex="-1" role="dialog" aria-hidden="true" style="overflow-y: auto">
+<div class="modal fade" id="signuppopup" tabindex="-1" role="dialog" aria-hidden="true" style="overflow-y: auto"
+     data-keyboard="false"
+     data-backdrop="static">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header text-center">
                 <h5 class="modal-title w-100">Create Account</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body text-center">
                 <form action="javascript:signup();" id="signupform">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Name" id="name" data-rule-required="true" data-msg-required="Please Enter Name">
+                        <input type="text" class="form-control" placeholder="Name" id="name" data-rule-required="true"
+                               data-msg-required="Please Enter Name">
                     </div>
                     <div class="form-group">
-                        <input type="email" class="form-control" placeholder="E-mail" id="emailnew" data-rule-required="true" data-msg-required="Please Enter Email">
+                        <input type="email" class="form-control" placeholder="E-mail" id="emailnew"
+                               data-rule-required="true" data-msg-required="Please Enter Email">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Organization Name" id="organization" data-rule-required="true" data-msg-required="Enter Oranization Name">
+                        <input type="text" class="form-control" placeholder="Organization Name" id="organization"
+                               data-rule-required="true" data-msg-required="Enter Oranization Name">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Role" id="role" data-rule-required="true" data-msg-required="Enter Role">
+                        <input type="text" class="form-control" placeholder="Role" id="role" data-rule-required="true"
+                               data-msg-required="Enter Role">
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" placeholder="Password" id="passwordnew" data-rule-required="true" data-msg-required="Enter Password">
+                        <div class="row">
+                            <div class="col-10">
+                                <input type="password" class="form-control" placeholder="Password" id="passwordnew"
+                                       data-rule-required="true" data-msg-required="Enter Password" minlength="6"
+                                       data-msg-number="Please enter at least 6 characters">
+                            </div>
+                            <div class="col-1">
+                                <span onclick="generatepassword('passwordnew')" class="btn btn-primary"
+                                      style="font-size: 10px;margin-top: 10px;"><i class="fa fa-key"></i>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" placeholder="Confirm Password" data-rule-required="true" data-msg-required="Confirm Your Password" data-rule-equalto="#passwordnew">
+                        <div class="row">
+                            <div class="col-10">
+                                <input type="password" class="form-control" id="confirmpassword" placeholder="Confirm Password"
+                                       data-rule-required="true" data-msg-required="Confirm Your Password"
+                                       data-rule-equalto="#passwordnew" data-msg-equalto="Enter Same Password Again">
+                            </div>
+                            <div class="col-1">
+                                <span onclick="showpassword('shpassconfirm','confirmpassword');showpassword('shpassconfirm','passwordnew')" class="btn btn-primary" style="font-size:10px;margin-top: 10px;"><i id="shpassconfirm" class="fa fa-eye"></i></span>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <button class="btn btn-block btn-primary" type="submit">SIGN UP</button>
@@ -544,6 +570,25 @@
     </div>
 </div>
 <!--Sign Up Modal-->
+
+<!--userinfo-->
+<div class="modal fade" id="userinfo" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h5 class="modal-title w-100">Account Information</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center" id="bodyuserinfo">
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--userinfo-->
+
 <div class="modal fade" id="alertpopup" tabindex="-1" role="dialog" aria-hidden="true" style="overflow-y: auto">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content" style="border-radius: 10px;">
@@ -777,17 +822,17 @@
         link.rel = 'stylesheet';
         link.type = 'text/css';
         link.href = 'css/darkdashboard.css';
-        var img = document.querySelector('img[alt="omglogo"]');
+        var img = document.querySelector('img[alt="logo"]');
         var labeldl = document.getElementById("darklighttext");
         if (dom.getAttribute('checked') != "") {
             localStorage.setItem("theme", "light");
             head[0].removeChild(head[0].lastChild);
             dom.setAttribute("checked", "");
             labeldl.innerText = "Light";
-            img.src = "images/omglogo.png";
+            img.src = "images/logo.png";
         } else {
             localStorage.setItem("theme", "dark");
-            img.src = "images/omglogodark.png";
+            img.src = "images/logodark.png";
             labeldl.innerText = "Dark";
             dom.removeAttribute("checked");
             head[0].appendChild(link);
@@ -802,15 +847,17 @@
             link.type = 'text/css';
             link.href = 'css/darkdashboard.css';
             var dom = document.getElementById('lightdarkbtn');
-            var img = document.querySelector('img[alt="omglogo"]');
+            var img = document.querySelector('img[alt="logo"]');
             var labeldl = document.getElementById("darklighttext");
 
-            img.src = "images/omglogodark.png";
+            img.src = "images/logodark.png";
             labeldl.innerText = "Dark";
             dom.removeAttribute("checked");
             head[0].appendChild(link);
         }
         createordestroybutton('dashboard');
+        checkloginindashboard();
+        userinfodisplay();
     }
 </script>
 <!--lightdark-->

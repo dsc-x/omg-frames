@@ -76,7 +76,7 @@ function signup() {
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 201) {
             loader('hide');
-            alertpopup('Account Created Successfully!', 'open','#28a745');
+            alertpopup('Account Created Successfully!', 'open', '#28a745');
             setTimeout(function () {
                 $('#signuppopup').modal('hide');
                 $('#loginpopup').modal('show');
@@ -85,16 +85,16 @@ function signup() {
             }, 2000);
         } else if (this.readyState == 4 && this.status == 409) {
             loader('hide');
-            alertpopup('Account Already Exists\nfor this Email', 'open','#dc3545');
+            alertpopup('Account Already Exists\nfor this Email', 'open', '#dc3545');
         } else if (this.readyState == 4 && this.status == 500) {
             loader('hide');
-            alertpopup('Failed to Create Account\nInternal Server Error', 'open','#dc3545');
+            alertpopup('Failed to Create Account\nInternal Server Error', 'open', '#dc3545');
         }
     };
     xhttp.open("POST", "https://api.iwasat.events/api/v1/register", true);
     xhttp.onerror = function () {
         loader('hide');
-        alertpopup("Unexpected Error!", 'open','#dc3545');
+        alertpopup("Unexpected Error!", 'open', '#dc3545');
     };
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send(JSON.stringify({email: email, name: name, organisation: organization, password: password, role: role}));
@@ -145,33 +145,41 @@ function login(win) {
 
         } else if (this.readyState == 4 && this.status == 401) {
             loader('hide');
-            alertpopup('Invalid Email or Password', 'open','#dc3545');
+            alertpopup('Invalid Email or Password', 'open', '#dc3545');
         }
     };
 
     xhttp.open("POST", "https://api.iwasat.events/api/v1/login", true);
     xhttp.onerror = function () {
         loader('hide');
-        alertpopup("Unexpected Error!", 'open','#dc3545');
+        alertpopup("Unexpected Error!", 'open', '#dc3545');
     };
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send(JSON.stringify({email: email, password: password}));
 
 }
 
-function deleteframe(frameid) {
+function deleteframe(frameid, frameindex) {
     if (confirm("Delete this Frame?")) {
         loader('show');
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 201) {
                 loader('hide');
+
+                //delete from array
+                if (frameindex > -1) {
+                    arrayofframes.splice(frameindex, 1);
+                }
+                //delete from array
+
+                displayarrayofframes();     //now display
             }
         };
         xhttp.open("DELETE", "https://api.iwasat.events/api/v1/frames?id=" + frameid, true);
         xhttp.onerror = function () {
             loader('hide');
-            alertpopup("Unexpected Error!", 'open','#dc3545');
+            alertpopup("Unexpected Error!", 'open', '#dc3545');
         };
         xhttp.setRequestHeader("Accept", "application/json");
         xhttp.setRequestHeader("Authorization", `Bearer ${sessionStorage.getItem('token')}`);
@@ -179,48 +187,54 @@ function deleteframe(frameid) {
     }
 }
 
+function displayarrayofframes() {
+
+    if (arrayofframes.length === 0) {
+        var temp = '<div class="text-center">\n' +
+            '        <div>It Seems No Saved Frames Yet!</div>\n' +
+            '        <span class="btn btn-outline-primary" onclick="window.open(\'dashboard.html\',\'_self\')"><img src="svglogos/add.svg" style="height: 20px;padding-right: 10px;padding-bottom: 3px;" alt="add">New Badge</span>\n' +
+            '    </div>';
+        document.querySelector(".container").innerHTML = temp;
+    } else {
+        var temp = "";
+        for (var i = 0; i < arrayofframes.length; i++) {
+            temp += '<div class="col-sm-4">'
+            temp += '<img class="displayframeimage" src="' + arrayofframes[i]["frame_data"] + '">'
+            temp += '<div class="overlay">'
+            temp += '<div class="text">' +
+                '<ul class="list">' +
+                '<li onclick="download(\'' + arrayofframes[i]["frame_data"] + '\');"><span><img src="svglogos/download.svg" class="iconsimagehover">Download</span></li>' +
+                '<li onclick="deleteframe(\'' + arrayofframes[i]["frame_id"] + '\',\'' + i + '\');"><span><img src="svglogos/delete.svg" class="iconsimagehover">Delete&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li>' +
+                '</ul>' +
+                '</div>'
+            temp += '</div>'
+            temp += '</div>'
+        }
+        document.getElementById('main').innerHTML = temp;
+    }
+}
+
+var arrayofframes;
+
 function getframes() {
     var token = sessionStorage.getItem('token');
     loader('show');
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 201) {
-            var arrayofframes = JSON.parse(this.responseText)["frames"];
-            if (arrayofframes.length === 0) {
-                var temp = '<div class="text-center">\n' +
-                    '        <div>It Seems No Saved Frames Yet!</div>\n' +
-                    '        <span class="btn btn-outline-primary" onclick="window.open(\'dashboard.html\',\'_self\')"><img src="svglogos/add.svg" style="height: 20px;padding-right: 10px;padding-bottom: 3px;" alt="add">New Badge</span>\n' +
-                    '    </div>';
-                document.querySelector(".container").innerHTML = temp;
-            } else {
-                var temp = "";
-                for (var i = 0; i < arrayofframes.length; i++) {
-                    temp += '<div class="col-sm-4">'
-                    temp += '<img class="displayframeimage" src="' + arrayofframes[i]["frame_data"] + '">'
-                    temp += '<div class="overlay">'
-                    temp += '<div class="text">' +
-                        '<ul class="list">' +
-                        '<li onclick="download(\'' + arrayofframes[i]["frame_data"] + '\');"><span><img src="svglogos/download.svg" class="iconsimagehover">Download</span></li>' +
-                        '<li onclick="deleteframe(\'' + arrayofframes[i]["frame_id"] + '\');"><span><img src="svglogos/delete.svg" class="iconsimagehover">Delete&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li>' +
-                        // '<li onclick="set(\'' + arrayofframes[i]["frame_data"] + '\');"><span><img src="svglogos/delete.svg" class="iconsimagehover">Edit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li>' +
-                        '</ul>' +
-                        '</div>'
-                    temp += '</div>'
-                    temp += '</div>'
-                }
-                document.getElementById('main').innerHTML = temp;
-            }
+            arrayofframes = JSON.parse(this.responseText)["frames"];
+            displayarrayofframes();
             loader('hide');
         } else if (this.readyState == 4 && this.status == 401) {
             loader('hide');
-            alertpopup(this.responseText, 'open','#dc3545');
+            alertpopup(this.responseText, 'open', '#dc3545');
         }
     };
     xhttp.open("GET", "https://api.iwasat.events/api/v1/frames", true);
 
     xhttp.onerror = function () {
         loader('hide');
-        alertpopup("Unexpected Error!", 'open','#dc3545');
+        alertpopup("Unexpected Error!", 'open', '#dc3545');
     };
     xhttp.setRequestHeader("Accept", "application/json");
     xhttp.setRequestHeader("Content-type", "application/json");
@@ -241,19 +255,19 @@ function saveframe() {
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 201) {
                 loader('hide');
-                alertpopup('Added Successfully', 'open','#28a745');
+                alertpopup('Added Successfully', 'open', '#28a745');
             } else if (this.readyState == 4 && this.status == 400) {
                 loader('hide');
-                alertpopup('Error While Saving\nTry Again', 'open','#dc3545');
+                alertpopup('Error While Saving\nTry Again', 'open', '#dc3545');
             } else if (this.readyState == 4 && this.status == 401) {
                 loader('hide');
-                alertpopup('Error While Saving\nLogin Again', 'open','#dc3545');
+                alertpopup('Error While Saving\nLogin Again', 'open', '#dc3545');
             }
         };
         xhttp.open("POST", "https://api.iwasat.events/api/v1/frames");
         xhttp.onerror = function () {
             loader('hide');
-            alertpopup("Unexpected Error!", 'open','#dc3545');
+            alertpopup("Unexpected Error!", 'open', '#dc3545');
         };
         xhttp.setRequestHeader("Accept", "application/json");
         xhttp.setRequestHeader('Content-Type', 'application/json');
@@ -270,23 +284,23 @@ function resetpassword() {
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             loader('hide');
-            alertpopup('Reset Link Sent to your E-mail', 'open','#28a745');
+            alertpopup('Reset Link Sent to your E-mail', 'open', '#28a745');
         } else if (this.readyState == 4 && this.status == 400) {
             loader('hide');
-            alertpopup('Enter E-mail', 'open','#dc3545');
+            alertpopup('Enter E-mail', 'open', '#dc3545');
         } else if (this.readyState == 4 && this.status == 401) {
             loader('hide');
-            alertpopup('Seems there\'s no Account Registered with this E-mail', 'open','#dc3545');
+            alertpopup('Seems there\'s no Account Registered with this E-mail', 'open', '#dc3545');
         } else if (this.readyState == 4 && this.status == 500) {
             loader('hide');
-            alertpopup('Internal Server Error!', 'open','#dc3545');
+            alertpopup('Internal Server Error!', 'open', '#dc3545');
         }
     };
 
     xhttp.open("POST", "https://api.iwasat.events/api/v1/send-reset-mail", true);
     xhttp.onerror = function () {
         loader('hide');
-        alertpopup("Unexpected Error!", 'open','#dc3545');
+        alertpopup("Unexpected Error!", 'open', '#dc3545');
     };
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send(JSON.stringify({email: email}));
@@ -302,26 +316,26 @@ function updatepassword() {
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             loader('hide');
-            alertpopup('Password Changed Successfully', 'open','#28a745');
+            alertpopup('Password Changed Successfully', 'open', '#28a745');
             setTimeout(function () {
                 window.open('dashboard.html', '_self');
             }, 2000);
         } else if (this.readyState == 4 && this.status == 400) {
             loader('hide');
-            alertpopup('Token or Password is absent in the request body', 'open','#dc3545');
+            alertpopup('Token or Password is absent in the request body', 'open', '#dc3545');
         } else if (this.readyState == 4 && this.status == 401) {
             loader('hide');
-            alertpopup('Invalid Token!', 'open','#dc3545');
+            alertpopup('Invalid Token!', 'open', '#dc3545');
         } else if (this.readyState == 4 && this.status == 500) {
             loader('hide');
-            alertpopup('Internal Server Error!', 'open','#dc3545');
+            alertpopup('Internal Server Error!', 'open', '#dc3545');
         }
     };
 
     xhttp.open("POST", "https://api.iwasat.events/api/v1/update-password", true);
     xhttp.onerror = function () {
         loader('hide');
-        alertpopup("Unexpected Error!", 'open','#dc3545');
+        alertpopup("Unexpected Error!", 'open', '#dc3545');
     };
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send(JSON.stringify({password: password, token: resettoken}));
